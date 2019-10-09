@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<link href="https://assets.gitee.com/assets/projects/application-082fe8a864fce274db6b9363b5185a27.css" media="screen" rel="stylesheet" type="text/css" />
+<head>
+<title>mallplus多租户商城: mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块</title>
+<link href="https://assets.gitee.com/assets/favicon-e87ded4710611ed62adc859698277663.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<meta content='gitee.com/zscat/mallplus git https://gitee.com/zscat/mallplus.git' name='go-import'>
+<meta charset='utf-8'>
+<meta content='always' name='referrer'>
+<meta content='码云' property='og:site_name'>
+<meta content='Object' property='og:type'>
+<meta content='http://gitee.com/zscat/mallplus' property='og:url'>
+<meta content='https://gitee.com/logo_themecolor.png' itemprop='image' property='og:image'>
+<meta content='北京zscat科技有限公司/mallplus多租户商城' itemprop='name' property='og:title'>
+<meta content='mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块' property='og:description'>
+<meta content='mallplus多租户商城,Java' name='Keywords'>
+<meta content='mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块' itemprop='description' name='Description'>
+
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<meta content="authenticity_token" name="csrf-param" />
+<meta content="bNVpblCwKg87bsRhXWsdEi+x9E3FSuT0bct2Txxn96c=" name="csrf-token" />
+
+<link href="https://assets.gitee.com/assets/application-e68436db8ea4455d9b32cb695cd94f12.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+//<![CDATA[
+window.gon = {};gon.locale="zh-CN";gon.sentry_dsn=null;gon.tour_env={"current_user":null,"action_name":"show","original_url":"http://gitee.com/zscat/mallplus","controller_path":"projects"};gon.http_clone="https://gitee.com/zscat/mallplus.git";gon.user_project="zscat/mallplus";gon.manage_branch="管理分支";gon.manage_tag="管理标签";gon.enterprise_id=1268679;gon.cp="点击复制";gon.aready_cp="已复制";gon.ref="master";
+//]]>
+</script>
+<script src="https://assets.gitee.com/assets/static/sentry-5.1.0-3339943e6f8f480a13ed7e20ddf60f54.js" type="text/javascript"></script>
+<script src="https://assets.gitee.com/assets/application-5d64874e555721f17c4577cb40632b5f.js" type="text/javascript"></script>
+<script src="https://assets.gitee.com/assets/lib/jquery.timeago.zh-CN-bcd91c2c27a815fa9a395595874b592b.js" type="text/javascript"></script>
+
+
+<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
+<script>
+  var title = document.title.replace(/( - Gitee| - 码云)$/, '')
+      imgUrl = '';
+  
+  document.addEventListener('DOMContentLoaded', function(event) {
+    var imgUrlEl = document.querySelector('.readme-box .markdown-body > img, .readme-box .markdown-body :not(a) > img');
+    imgUrl = imgUrlEl && imgUrlEl.getAttribute('src');
+  
+    if (!imgUrl) {
+      imgUrlEl = document.querySelector('meta[itemprop=image]');
+      imgUrl = imgUrlEl && imgUrlEl.getAttribute('content'); 
+      imgUrl = imgUrl || "https://gitee.com/logo_themecolor.png";
+    }
+  
+    wx.config({
+      debug: false,
+      appId: "wxff219d611a159737",
+      timestamp: "1570604020",
+      nonceStr: "3c785689bff03bd94026b53e7c60bb10",
+      signature: "7b7f201a7100d4fd8e6dd8573b0585f3774955f3",
+      jsApiList: [
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage'
+      ]
+    });
+  
+    wx.ready(function () {
+      wx.onMenuShareTimeline({
+        title: title, // 分享标题
+        link: "https://gitee.com/zscat/mallplus", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: imgUrl // 分享图标
+      });
+      wx.onMenuShareAppMessage({
+        title: title, // 分享标题
+        link: "https://gitee.com/zscat/mallplus", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        desc: document.querySelector('meta[name=Description]').getAttribute('content'),
+        imgUrl: imgUrl // 分享图标
+      });
+    });
+    wx.error(function(res){
+      console.error('err', res)
+    });
+  })
+</script>
+
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [["$$","$$"],["\\[","\\]"]],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+    ignoreClass: "container|files",
+    processClass: "markdown-body"
+  }
+});
+</script>
+<script src="https://assets.gitee.com/uploads/resources/MathJax-2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js" type="text/javascript"></script>
+
+<script>
+  var messages = {
+    'zh-CN': {
+      addResult: '增加 <b>{term}</b>',
+      count: '已选择 {count}',
+      maxSelections: '最多 {maxCount} 个选择',
+      noResults: '未找到结果',
+      serverError: '连接服务器时发生错误'
+    },
+    'zh-TW': {
+      addResult: '增加 <b>{term}</b>',
+      count: '已選擇 {count}',
+      maxSelections: '最多 {maxCount} 個選擇',
+      noResults: '未找到結果',
+      serverError: '連接服務器時發生錯誤'
+    }
+  }
+  
+  if (messages[gon.locale]) {
+    $.fn.dropdown.settings.message = messages[gon.locale]
+  }
+</script>
+
+<!--[if lt IE 10]>
+<script>
+    window.location.href = "/incompatible.html";
+</script>
+<![endif]-->
+</head>
+
+<body class='git-project lang-zh-CN'>
+<script src="https://assets.gitee.com/assets/projects/app-9b7591faf5b5fb7b8da39e2b0cc2141f.js" type="text/javascript"></script>
+<header class='common-header fixed noborder' id='git-header-nav'>
+<div class='ui container'>
+<div class='ui menu header-menu'>
+<div class='git-nav-expand-bar'>
+<i class='iconfont icon-mode-table'></i>
+</div>
+<div class='gitee-nav__sidebar'>
+<div class='gitee-nav__sidebar-container'>
+<div class='gitee-nav__sidebar-top'>
+<div class='gitee-nav__avatar-box'></div>
+<div class='gitee-nav__buttons-box'>
+<a href="/login" class="ui button small fluid orange">登录</a>
+<a href="/signup" class="ui button small fluid basic is-register">注册</a>
+</div>
+</div>
+<div class='gitee-nav__sidebar-middle'>
+<div class='gitee-nav__sidebar-list'>
+<ul>
+<li class='gitee-nav__sidebar-item'>
+<a href="/explore"><i class='iconfont icon-ic-discover'></i>
+<span class='gitee-nav__sidebar-name'>开源软件</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/gists"><i class='iconfont icon-ic-gists1'></i>
+<span class='gitee-nav__sidebar-name'>代码片段</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/enterprises"><i class='iconfont icon-ic-enterprise'></i>
+<span class='gitee-nav__sidebar-name'>企业版</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/education"><i class='iconfont icon-ic-education'></i>
+<span class='gitee-nav__sidebar-name'>高校版</span>
+</a></li>
+<li class='gitee-nav__sidebar-item split-line'></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/search"><i class='iconfont icon-ic-search'></i>
+<span class='gitee-nav__sidebar-name'>搜索</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/help"><i class='iconfont icon-help-circle'></i>
+<span class='gitee-nav__sidebar-name'>帮助中心</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/terms"><i class='iconfont icon-file'></i>
+<span class='gitee-nav__sidebar-name'>使用条款</span>
+</a></li>
+<li class='gitee-nav__sidebar-item'>
+<a href="/about_us"><i class='iconfont icon-issuepx'></i>
+<span class='gitee-nav__sidebar-name'>关于我们</span>
+</a></li>
+</ul>
+</div>
+</div>
+<div class='gitee-nav__sidebar-bottom'>
+<div class='gitee-nav__sidebar-close-button'>
+<i class='fa fa-angle-double-left'></i>
+</div>
+</div>
+</div>
+</div>
+
+<div class='item gitosc-logo'>
+<a href="/"><img class='ui inline image' height='28' src='/logo.svg?20171024' width='95'>
+<img class='ui inline black image' height='28' src='/logo-black.svg?20171024' width='95'>
+</a></div>
+<a href="/explore" class="item " title="开源软件">开源软件
+</a><a href="/enterprises" class="item " title="企业版">企业版
+<sup class='ui red label'>
+特惠
+</sup>
+</a><a href="/education" class="item " title="高校版">高校版
+</a><a href="https://blog.gitee.com/" class="item" id="gitee-blog" target="_blank" title="博客">博客
+</a><div class='center responsive-logo'>
+<a href="/"><img class='ui inline image' height='24' src='/logo.svg?20171024' width='85'>
+<img class='ui inline black image' height='24' src='/logo-black.svg?20171024' width='85'>
+</a></div>
+<div class='right menu userbar' id='git-nav-user-bar'>
+<div class='item git-nav-search-item'>
+<form accept-charset="UTF-8" action="/search" autocomplete="on" data-text-filter="搜索格式不正确" data-text-require="搜索关键字不能少于1个" id="navbar-search-form" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+<div class='ui mini fluid input'>
+<input id="navbar-search-input" name="q" placeholder="搜索项目、代码片段..." type="text" value="" />
+<input id="navbar-search-type" name="type" type="hidden" />
+</div>
+</form>
+
+
+</div>
+<a href="/signup" class="item git-nav-user__register-item">注册
+</a><a href="/login" class="item git-nav-user__login-item">登录
+</a><script>
+  $('.destroy-user-session').click(function() {
+    $.cookie('access_token', null, { path: '/' });
+  })
+</script>
+
+</div>
+</div>
+</div>
+</header>
+<script>
+  Gitee.initNavbar()
+  Gitee.initRepoRemoteWay()
+</script>
+
+<!--[if lt IE 10]>
+<script>
+  window.location.href = "/incompatible.html"
+</script>
+<![endif]-->
+
+<div class='fixed-notice-infos'>
+<div class='all-messages'>
+</div>
+<div class='ui container'>
+<div class='flash-messages' id='messages-container'></div>
+</div>
+<script>
+  (function() {
+    $(function() {
+      var $error_box, alertTip, notify_content, notify_options, template;
+  
+      template = '<div data-notify="container" class="ui {0} message" role="alert">' + '<i data-notify="dismiss" class="close icon"></i>' + '<span data-notify="message">{2}</span>' + '</div>';
+      notify_content = null;
+      notify_options = {};
+      alertTip = '';
+      $error_box = $(".flash_error.flash_error_box");
+      if (notify_options.type === 'error' && $error_box.length > 0 && !$.isEmptyObject(notify_content.message)) {
+        if (notify_content.message === 'captcha_fail') {
+          alertTip = "验证码不正确";
+        } else if (notify_content.message === 'captcha_expired') {
+          alertTip = "验证码已过期，请点击刷新";
+        } else if (notify_content.message === 'not_found_in_database') {
+          alertTip = "帐号或者密码错误";
+        } else if (notify_content.message === 'not_found_and_show_captcha') {
+          alertTip = "帐号或者密码错误";
+        } else if (notify_content.message === 'phone_captcha_fail') {
+          alertTip = "手机验证码不通过";
+        } else {
+          alertTip = notify_content.message;
+        }
+        return $error_box.html(alertTip).show();
+      } else if (notify_content) {
+        if ("show" === 'third_party_binding') {
+          return $('#third_party_binding-message').html(notify_content.message).addClass('ui message red');
+        }
+        notify_options.delay = 3000;
+        notify_options.template = template;
+        notify_options.offset = {
+          x: 10,
+          y: 30
+        };
+        notify_options.element = '#messages-container';
+        return $.notify(notify_content, notify_options);
+      }
+    });
+  
+  }).call(this);
+</script>
+
+</div>
+<script>
+  (function() {
+    $(function() {
+      var setCookie;
+  
+      setCookie = function(name, value) {
+        $.cookie(name, value, {
+          path: '/',
+          expires: 365
+        });
+      };
+      $('#remove-bulletin, #remove-bulletin-dashboard').on('click', function() {
+        setCookie('remove_bulletin', "gitee-maintain-1566682872");
+        $('#git-bulletin').hide();
+      });
+      $('#remove-member-bulletin').on('click', function() {
+        setCookie('remove_member_bulletin', "gitee_member_bulletin");
+        $(this).parent().hide();
+      });
+      return $('#remove-gift-bulletin').on('click', function() {
+        setCookie('remove_gift_bulletin', "gitee-gift-bulletin");
+        $(this).parent().hide();
+      });
+    });
+  
+  }).call(this);
+</script>
+
+<div class='site-content'>
+<div class='git-project-header'>
+<div class='fixed-notice-infos'>
+<div class='ui info icon floating message green' id='fetch-ok' style='display: none'>
+<div class='content'>
+<div class='header status-title'>
+<i class='info icon status-icon'></i>
+代码拉取完成，页面将自动刷新
+</div>
+</div>
+</div>
+<div class='ui info icon floating message error' id='fetch-error' style='display: none'>
+<div class='content'>
+<div class='header status-title'>
+<i class='info icon status-icon'></i>
+<span class='error_msg'></span>
+</div>
+</div>
+</div>
+</div>
+<div class='ui container'>
+<div class='git-project-categories'>
+<a href="/explore">开源项目</a>
+<span class='symbol'>></span>
+<a href="/explore/build-web-system">建站系统</a>
+<span class='symbol'>></span>
+<a href="/explore/ecommerce">新零售/网店/商城</a>
+<span class='symbol and-symbol'>&</span>
+</div>
+
+<div class='git-project-header-details'>
+<div class='git-project-header-container'>
+<div class='git-project-header-actions'>
+<span class='basic ui buttons pointing top left dropdown metrics-radar'>
+<div class='ui button project-radar'>
+<i class='iconfont icon-radar'></i>
+指数
+</div>
+<div class='ui button action-social-count exponent-total-sorce'>
+0
+</div>
+<div class='menu radar'>
+<div class='item radar-menu'>
+<div class='hide' data-url='/zscat/mallplus/project_radars' id='metrics-radar'>
+<div class='title'>
+<div class='fisrt-title'>
+<div class='project-name' title='mallplus多租户商城'>
+mallplus多租户商城
+</div>
+<div class='gitee-exponent'>
+<div class='text'></div>
+<div class='exponent-score'></div>
+</div>
+</div>
+<div class='total-percent'>
+<div class='percent-header'></div>
+<div class='percent-score'></div>
+<div class='percent-end'></div>
+</div>
+</div>
+<div class='wrap'></div>
+<div class='project-radar-list'>
+<div class='descript-contianer'>
+<div class='descript-title'>
+<p>代码活跃度</p>
+<p>社区活跃度</p>
+<p>团队健康</p>
+<p>流行趋势</p>
+<p>影响力</p>
+</div>
+<div class='descript'>
+<p>：与代码提交频次相关</p>
+<p>：与项目和用户的issue、pr互动相关</p>
+<p>：与团队成员人数和稳定度相关</p>
+<p>：与项目近期受关注度相关</p>
+<p>：与项目的star、下载量等社交指标相关</p>
+</div>
+</div>
+</div>
+<div class='finaltime'></div>
+</div>
+<script src="https://assets.gitee.com/assets/skill_radar/rep_app-dc1f04bc4f0995c42f6c701c96096027.js" type="text/javascript"></script>
+
+</div>
+</div>
+</span>
+<div class='ui tiny modal project-donate-modal' id='project-donate-modal'>
+<i class='iconfont icon-close close'></i>
+<div class='header'>捐赠</div>
+<div class='content'>
+该仓库未开启捐赠功能，可发送私信通知作者开启
+</div>
+<div class='actions'>
+<a class='ui blank button cancel'>取消</a>
+<a class='ui orange ok button' href='/notifications/messages/134431'>发送私信</a>
+</div>
+</div>
+<div class='ui small modal wepay-qrcode'>
+<i class='iconfont icon-close close'></i>
+<div class='header'>
+扫描微信二维码支付
+<span class='wepay-cash'></span>
+</div>
+<div class='content weqcode-center'>
+<img id='wepay-qrcode' src=''>
+</div>
+<div class='actions'>
+<div class='ui cancel blank button'>取消</div>
+<div class='ui ok orange button'>
+支付完成
+</div>
+</div>
+</div>
+<div class='ui mini modal' id='confirm-alipay-modal'>
+<div class='header'>支付提示</div>
+<div class='content'>
+将跳转至支付宝完成支付
+</div>
+<div class='actions'>
+<div class='ui approve orange button'>
+确定
+</div>
+<div class='ui blank cancel button'>
+取消
+</div>
+</div>
+</div>
+
+<span class='ui basic buttons watch-container'>
+<a href="/login" class="ui button watch" title="你必须登录后才可以watch一个仓库"><i class='iconfont icon-watch'></i>
+Watch
+</a><a href="/zscat/mallplus/watchers" class="ui button action-social-count" title="55">55
+</a></span>
+<span class='ui basic buttons star-container'>
+<a href="/login" class="ui button star" title="你必须登录后才可以star一个仓库"><i class='iconfont icon-star'></i>
+Star
+</a><a href="/zscat/mallplus/stargazers" class="ui button action-social-count" title="232">232
+</a></span>
+<span class='ui basic buttons fork-container'>
+<a href="/login" class="ui button fork" title="你必须登录后才可以fork一个仓库"><i class='iconfont icon-fork'></i>
+Fork
+</a><a href="/zscat/mallplus/members" class="ui button action-social-count" title="117">117
+</a></span>
+</div>
+<h2 class='git-project-title'>
+<span class="project-title"><a href='/zscat'><i class="iconfont icon-enterprise-badge" title="这是一个企业仓库"></i></a> <i class="project-icon iconfont icon-project-public" title="这是一个公开仓库"></i> <a href="/zscat" class="author" title="北京zscat科技有限公司">北京zscat科技有限公司</a> / <a href="/zscat/mallplus" class="repository" style="padding-bottom: 0px" target="" title="mallplus多租户商城">mallplus多租户商城</a></span><span class="project-badges"><a href="/explore/all?lang=Java" class="ui small label proj-language" target="_blank" title="主要编程语言">Java</a><a href="/zscat/mallplus/blob/master/LICENSE" class="ui small license label" title="开源许可协议">Apache-2.0</a></span>
+
+<input id="project_title" name="project_title" type="hidden" value="北京zscat科技有限公司/mallplus多租户商城" />
+</h2>
+</div>
+</div>
+</div>
+<div class='row' id='import-result-message' style='padding-top: 0px; display: none'>
+<div class='sixteen wide column'>
+<div class='ui icon yellow message status-color'>
+<i class='info icon status-icon' style='width:60px;padding-right:12px;'></i>
+<i class='close icon'></i>
+<div class='header status-title'>
+同步状态
+</div>
+<span class='status-message'></span>
+</div>
+</div>
+</div>
+<div class='ui small modal' id='modal-fork-project'>
+<i class='icon-close iconfont close'></i>
+<div class='header'>
+Fork 仓库
+</div>
+<div class='content'>
+<div class='fork-info-content'>
+<div class='ui segment fork_project_loader'>
+<div class='ui active inverted dimmer'>
+<div class='ui text loader'>加载中</div>
+</div>
+</div>
+</div>
+</div>
+<div class='actions fork-action hide'>
+<a class='cancel'>&emsp;取消&emsp;</a>
+<div class='ui large button orange ok'>&emsp;确认&emsp;</div>
+</div>
+</div>
+<script>
+  (function() {
+    $('.fork-container').popup({
+      inline: true,
+      hoverable: true,
+      position: 'bottom left'
+    });
+  
+  }).call(this);
+</script>
+<script>
+  (function() {
+    $('#modal-fork-project').modal({
+      transition: 'fade'
+    });
+  
+    $('.checkbox.sync-wiki').checkbox();
+  
+  }).call(this);
+</script>
+<style>
+  i.loading{-webkit-animation:icon-loading 1.2s linear infinite;animation:icon-loading 1.2s linear infinite}.qrcode_cs{float:left}.check-sync-wiki{float:left;height:28px;line-height:28px}.check-sync-wiki .sync-wiki-warn{color:#e28560}
+</style>
+<script>
+  $('.metrics-radar').dropdown({ action: 'nothing' });
+</script>
+
+<div class='git-project-nav'>
+<div class='ui container'>
+<div class='ui secondary pointing menu'>
+<a href="/zscat/mallplus" class="item active"><i class='iconfont icon-code'></i>
+代码
+</a><a href="/zscat/mallplus/issues" class="item "><i class='iconfont icon-issue'></i>
+Issues
+<span class='ui mini circular label'>
+0
+</span>
+</a><a href="/zscat/mallplus/pulls" class="item "><i class='iconfont icon-pull-request'></i>
+Pull Requests
+<span class='ui mini circular label'>
+0
+</span>
+</a><a href="/zscat/mallplus/attach_files" class="item "><i class='iconfont icon-annex'></i>
+附件
+<span class='ui mini circular label'>0</span>
+</a><a href="/zscat/mallplus/wikis" class="item "><i class='iconfont icon-wiki'></i>
+Wiki
+<span class='ui mini circular label'>
+4
+</span>
+</a><a href="/zscat/mallplus/graph/master" class="item  "><i class='iconfont icon-statistics'></i>
+统计
+</a><div class='item project-devops-item'>
+<div class='ui pointing top right dropdown project-devops-dropdown'>
+<div class='text'>
+<i class='iconfont icon-devops'></i>
+DevOps
+</div>
+<i class='dropdown icon'></i>
+<div class='menu' style='display:none'>
+<a href="https://gitee.com/help/articles/4193" class="item" target="_blank"><img alt="Jenkins_for_gitee" src="https://assets.gitee.com/assets/jenkins_for_gitee-a079e18b0276e2d1230294a470364e7b.png" />
+<div class='item-title'>
+Jenkins for Gitee
+</div>
+</a><!-- = link_to code_pipeline_project_paas_path(@project), class: 'item' do -->
+<!-- = image_tag "code_pipeline.svg" -->
+<!-- .item-title -->
+<!-- #{t('project.nav-menu.code_pipeline')} -->
+<a href="/zscat/mallplus/paas/huaweicloud_cse" class="item"><img alt="Hauweiwfw" src="https://assets.gitee.com/assets/hauweiwfw-9edbcf60ca0a5d0de81d2fc804efa9ac.png" />
+<div class='item-title'>
+华为微服务平台
+</div>
+</a><a href="/zscat/mallplus/paas/tencent_hub" class="item"><img alt="Tencent_hub" src="https://assets.gitee.com/assets/tencent_hub-e263083dfb38e2149d8a9eca5347f4d5.png" />
+<div class='item-title'>
+Tencent Hub
+</div>
+</a><a href="/zscat/mallplus/paas/select_platform" class="item"><img alt="Mopaas_mini" src="https://assets.gitee.com/assets/mopaas_mini-72f0d5aeae31630ae89f624dfb0c23ca.png" />
+<div class='item-title'>
+MoPaaS V3
+</div>
+</a></div>
+</div>
+</div>
+<div class='item'>
+<div class='ui pointing top right dropdown git-project-service'>
+<div class='text'>
+<i class='iconfont icon-service'></i>
+服务
+</div>
+<i class='dropdown icon'></i>
+<div class='menu' style='display:none'>
+<a href="/zscat/mallplus/pages" class="item"><img alt="Gitee" src="https://assets.gitee.com/assets/gitee-8dc2f1d8974f3bef1f5391984e36b4d6.png" />
+<div class='item-title'>
+Gitee Pages
+</div>
+</a><a href="/zscat/mallplus/javadoc" class="item"><img alt="Maven" src="https://assets.gitee.com/assets/maven-aea8b4f12e957c8c67de9c6fc83d27e6.png" />
+<div class='item-title'>
+JavaDoc
+</div>
+</a><a href="/zscat/mallplus/quality_analyses?platform=sonar_qube" class="item"><img alt="Sonar_mini" src="https://assets.gitee.com/assets/sonar_mini-6270e37950512a0bf0a05ac5b9b11243.png" />
+<div class='item-title'>
+质量分析
+</div>
+</a><a href="/zscat/mallplus/quality_analyses?platform=codesafe" class="item"><img alt="Codesafe_mini" src="https://assets.gitee.com/assets/codesafe_mini-3538ba12e18b8096da298683c9b3491c.png" width="100%" />
+<div class='item-title'>
+奇安信代码卫士
+</div>
+</a><button class='ui orange basic button quit-button' id='quiting-button'>
+我知道了，不再自动展开
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  $('.git-project-nav .ui.dropdown').dropdown({ action: 'nothing' });
+</script>
+<style>
+  .git-project-nav i.checkmark.icon {
+    color: green;
+  }
+  #quiting-button {
+    display: none;
+  }
+  
+  .git-project-nav .dropdown .menu.hidden:after {
+    visibility: hidden !important;
+  }
+</style>
+<script>
+  isSignIn = false
+  isClickGuide = false
+  $('#git-versions.dropdown').dropdown();
+  $.ajax({
+    url:"/zscat/mallplus/access/add_access_log",
+    type:"GET"
+  });
+  $('#quiting-button').on('click',function() {
+    $('.git-project-service').click();
+    if (isSignIn) {
+      $.post("/projects/set_service_guide")
+    }
+    $.cookie("Serve_State", true, { expires: 3650, path: '/'})
+    $('#quiting-button').hide();
+  });
+  if (!(isClickGuide || $.cookie("Serve_State") == 'true')) {
+    $('.git-project-service').click()
+    $('#quiting-button').show()
+  }
+</script>
+
+</div>
+<div class='ui container'>
+<div class='register-guide'>
+<div class='register-container'>
+<div class='regist'>
+加入码云
+</div>
+<div class='description'>
+与超过 300 万 开发者一起发现、参与优秀开源项目，私有仓库也完全免费 ：）
+</div>
+<a href="/signup?from=project-guide" class="ui orange button free-registion">免费加入</a>
+<div class='login'>
+已有帐号？
+<a href="/login?from=project-guide">立即登录</a>
+</div>
+</div>
+</div>
+
+<div class='git-project-content-wrapper'>
+<div id='git-project-search-panel' style='display: none;'>
+<a href='javascript: void(0);' id='back-to-list'>
+<i class='angle left icon'></i>
+返回
+</a>
+<div class='ui icon input search-input'>
+<i class='iconfont icon-search icon'></i>
+<input id='search-name' maxlength='40' placeholder='搜索文件' type='text'>
+</div>
+</div>
+<div class='git-project-content' id='git-project-content'>
+<div class='git-project-desc-wrapper'>
+<div class='git-project-desc'>
+<div class='project-introduce'>
+<span class='git-project-desc-text'>
+mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块
+</span>
+<a class='hide spread' href='javascript:void(0);'>
+展开
+<i class='caret down icon'></i>
+</a>
+<a class='retract hide' href='javascript:void(0);'>
+收起
+<i class='caret up icon'></i>
+</a>
+<p class='git-project-homepage'>
+<a href="http://yjlive.cn:8082" id="homepage" rel="nofollow" target="_blank">http://yjlive.cn:8082</a>
+</p>
+</div>
+</div>
+<div class='git-project-desc-edit flex'>
+<div class='sixty-percent ui small input'>
+<input name='project[description]' placeholder='描述' type='text' value='mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块'>
+</div>
+<div class='twenty-percent ui small input'>
+<input data-regex-value='(^$)|(^(http|https):\/\/(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).*)|(^(http|https):\/\/[a-zA-Z0-9]+([_\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,10}(:[0-9]{1,10})?(\/.*)?$)' name='project[homepage]' placeholder='主页(eg: https://gitee.com)' type='text' value='http://yjlive.cn:8082'>
+</div>
+<div class='zero-percent'>
+<button class='ui orange button btn-save'>
+保存更改
+</button>
+<button class='ui button btn-cancel-edit'>
+取消
+</button>
+</div>
+</div>
+<script>
+  $(function () {
+    new ProjectInfoEditor({
+      el: '.git-project-desc-wrapper',
+      homepage: "http://yjlive.cn:8082",
+      description: "mallplus项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，微信商城，pc商城，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块",
+      url: "/zscat/mallplus/update_description",
+      modalHelper: Gitee.modalHelper
+    })
+  })
+</script>
+</div>
+
+<div class='git-project-summary' id='git-project-summary'>
+<div class='summary-viewer'>
+<div class='viewer-wrapper'>
+<ul>
+<li>
+<a href="/zscat/mallplus/commits/master"><i class='iconfont icon-commit'></i>
+<b>58</b>
+次提交
+</a></li>
+<li>
+<a href="/zscat/mallplus/branches"><i class='iconfont icon-branches'></i>
+<b>10</b>
+个分支
+</a></li>
+<li>
+<a href="/zscat/mallplus/tags"><i class='iconfont icon-tag'></i>
+<b>0</b>
+个标签
+</a></li>
+<li>
+<a href="/zscat/mallplus/releases"><i class='iconfont icon-release'></i>
+<b>0</b>
+个发行版
+</a></li>
+<li>
+<a href="/zscat/mallplus/contributors?ref=master"><i class='iconfont icon-collaborators'></i>
+<b class='contributor-count' data-url='/zscat/mallplus/contributors_count?ref=master'></b>
+<span class='contributor-text'>
+正在获取贡献者
+</span>
+</a></li>
+</ul>
+<ul>
+<li>
+<span class='ui circular label mini' style='background-color: #EDEDED'></span>
+<b>PLpgSQL</b>
+<b class='percent'>84.8%</b>
+</li>
+<li>
+<span class='ui circular label mini' style='background-color: #b07219'></span>
+<b>Java</b>
+<b class='percent'>15.2%</b>
+</li>
+</ul>
+</div>
+</div>
+<div class='summary-languages' title='点击查看语言占比'>
+<a class='language-color' style='width: 84.8%; background-color: #EDEDED;'></a>
+<a class='language-color' style='width: 15.2%; background-color: #b07219;'></a>
+</div>
+
+</div>
+<div class='git-project-bread' id='git-project-bread'>
+<div class='git-project-right-actions float-right'>
+<div class='d-inline-block' id='git-project-tree-actions'>
+<script>
+  $('.disabled-upload-readonly').popup({
+    content: "只读目录不允许上传文件",
+    className: {
+      popup: 'ui popup',
+    },
+    position: 'bottom center',
+  })
+  $('.disabled-create-folder').popup({
+    content: "只读目录不允许创建目录",
+    className: {
+      popup: 'ui popup',
+    },
+    position: 'bottom center',
+  })
+  $('.disabled-create-file').popup({
+    content: "只读目录不允许创建文件",
+    className: {
+      popup: 'ui popup',
+    },
+    position: 'bottom center',
+  })
+  $('.disabled-upload-readonly').click(() => {
+    return false
+  })
+  $('.disabled-create-folder').click(() => {
+    return false
+  })
+  $('.disabled-create-file').click(() => {
+    return false
+  })
+</script>
+<style>
+  .disabled-upload-readonly,.disabled-create-file,.disabled-create-folder{background-color:#dcddde !important;color:rgba(0,0,0,0.4) !important;opacity:0.3 !important;background-image:none !important;-webkit-box-shadow:none !important;box-shadow:none !important}
+</style>
+
+</div>
+<div class='ui orange button' id='btn-dl-or-clone'>
+克隆/下载
+<i class='dropdown icon'></i>
+<div class='git-project-download-panel for-project ui bottom right popup'>
+<div class='ui small secondary pointing menu'>
+<a class='item active' data-type='http' data-url='https://gitee.com/zscat/mallplus.git'>HTTPS</a>
+<a class='item' data-type='ssh' data-url='git@gitee.com:zscat/mallplus.git'>SSH</a>
+</div>
+<div class='ui fluid right labeled small input'>
+<input id="project_clone_url" name="project_clone_url" onclick="focus();select()" readonly="readonly" type="text" value="https://gitee.com/zscat/mallplus.git" />
+<div class='ui basic label'>
+<div class='ui small basic orange button' data-clipboard-target='#project_clone_url' id='btn-copy-clone-url'>
+复制
+</div>
+</div>
+</div>
+<hr>
+<a href="javascript:void(0);" class="ui fluid download link button"><i class='icon download'></i>
+下载ZIP
+</a><div class='download_repository_zip form modal tiny ui' id='unlanding-complaint-modal'>
+<i class='iconfont icon-close close'></i>
+<div class='header'>
+登录提示
+</div>
+<div class='container actions'>
+<div class='content'>
+该操作需登录码云帐号，请先登录后再操作。
+</div>
+<div class='ui orange icon large button ok'>
+立即登录
+</div>
+<div class='ui button blank cancel'>
+没有账号，去注册
+</div>
+</div>
+</div>
+<script>
+  var $elm = $('.download');
+  
+  $elm.on('click', function() {
+    var modals = $("#unlanding-complaint-modal.download_repository_zip");
+    if (modals.length > 1) {
+      modals.eq(0).modal('show');
+    } else {
+      modals.modal('show');
+    }
+  })
+  $("#unlanding-complaint-modal.download_repository_zip").modal({
+    onDeny: function() {
+      window.location.href = "/signup?from=download_repository_zip";
+    },
+    onApprove: function() {
+      window.location.href = "/login?from=download_repository_zip";
+    }
+  })
+</script>
+
+<hr>
+<div class='ent-poster'>
+<a href='/enterprises?from=gea-dl-A-1'>
+<img class='ent-poster-ads' src='https://images.gitee.com/uploads/images/2018/1226/113453_a425da51_1305863.png'>
+</a>
+</div>
+<style>
+  .ent-poster-ads{width:100%}
+</style>
+
+</div>
+<script>
+  (function() {
+    var $btnCopy, $input, $item, $panel, clipboard, remoteWay;
+  
+    $input = $('#project_clone_url');
+  
+    remoteWay = '';
+  
+    clipboard = new Clipboard('#btn-copy-clone-url');
+  
+    $panel = $('.git-project-download-panel');
+  
+    $btnCopy = $('#btn-copy-clone-url');
+  
+    $panel.find('.menu > .item').on('click', function() {
+      var $item;
+  
+      $item = $(this).addClass('active');
+      $item.siblings().removeClass('active');
+      $input.val($item.attr('data-url'));
+      return $.cookie('remote_way', $item.attr('data-type'), {
+        expires: 365,
+        path: '/'
+      });
+    });
+  
+    $('body').on('click', '#btn-dl-or-clone', function(e) {
+      e.stopImmediatePropagation();
+      if ($(e.target)[0] === $panel[0] || $(e.target).closest($panel).length) {
+        return;
+      }
+      return $panel.transition('fade up');
+    });
+  
+    $('body').on('click', function() {
+      if ($panel.transition('is visible')) {
+        return $panel.transition('fade up');
+      }
+    });
+  
+    $item = null;
+  
+    if (remoteWay) {
+      $item = $panel.find('.item[data-type="' + remoteWay + '"]');
+    }
+  
+    if (!$item || $item.length < 1) {
+      $item = $panel.find('.ui.menu .item').eq(0);
+    }
+  
+    $item.addClass('active').siblings().removeClass('active');
+  
+    $input.val($item.attr('data-url'));
+  
+    clipboard.on('success', function() {
+      $btnCopy.popup({
+        content: '已复制',
+        position: 'right center',
+        onHidden: function() {
+          return $btnCopy.popup('destroy');
+        }
+      });
+      return $btnCopy.popup('show');
+    });
+  
+    clipboard.on('error', function() {
+      $btnCopy.popup({
+        content: '复制失败，请手动复制',
+        position: 'right center',
+        onHidden: function() {
+          return $btnCopy.popup('destroy');
+        }
+      });
+      return $btnCopy.popup('show');
+    });
+  
+  }).call(this);
+</script>
+
+</div>
+</div>
+<div class='ui horizontal list'>
+<div class='item git-project-branch-item'>
+<input id="path" name="path" type="hidden" value="" />
+<div class='ui top left pointing dropdown gradient button dropdown-has-tabs' id='git-project-branch'>
+<input id="ref" name="ref" type="hidden" value="master" />
+<div class='default text'>
+master
+</div>
+<i class='dropdown icon'></i>
+<div class='menu'>
+<div class='ui left icon search input'>
+<i class='iconfont icon-search'></i>
+<input placeholder='搜索分支' type='text'>
+</div>
+<div class='tab-menu'>
+<div class='tab-menu-action' data-tab='branches'>
+<a href="/zscat/mallplus/branches" class="ui link button">管理</a>
+</div>
+<div class='tab-menu-action' data-tab='tags'>
+<a href="/zscat/mallplus/tags" class="ui link button">管理</a>
+</div>
+<div class='tab-menu-item' data-placeholder='搜索分支' data-tab='branches'>
+分支 (10)
+</div>
+</div>
+<div class='tab scrolling menu' data-tab='branches'>
+<div class='item' data-value='token1'>token1</div>
+<div class='item' data-value='lpay'>lpay</div>
+<div class='item' data-value='token'>token</div>
+<div class='item' data-value='master'>master</div>
+<div class='item' data-value='other1'>other1</div>
+<div class='item' data-value='0808'>0808</div>
+<div class='item' data-value='cxh'>cxh</div>
+<div class='item' data-value='other'>other</div>
+<div class='item' data-value='test'>test</div>
+<div class='item' data-value='testpay'>testpay</div>
+</div>
+</div>
+</div>
+
+<script>
+  $(function () {
+    Gitee.initTabsInDropdown($('#git-project-branch').dropdown({
+      fullTextSearch: true,
+      onChange: function (value, text) {
+        var path = $('#path').val();
+        var href = ['/zscat/mallplus/tree', encodeURIComponent(value), path].join('/');
+        window.location.href = href;
+      }
+    }));
+  })
+</script>
+
+</div>
+<div class='item' id='git-project-root-actions'>
+<div class='disp-index repo-index' style='margin-left:0px;'>
+<div class='ui horizontal list repo-action-list'>
+<div class='item'>
+<div class='ui pointing right top dropdown gradient button' id='git-project-file'>
+<div class='text'>文件</div>
+<i class='dropdown icon'></i>
+<div class='menu'>
+<div class='disabled item'>新建文件</div>
+<div class='disabled item'>上传文件</div>
+<a class='item repo-action' id='search-files'>
+搜索文件
+</a>
+</div>
+</div>
+</div>
+<div class='item toschina-content__hidden'>
+<a href="/-/ide/project/zscat/mallplus/edit/master" class="ui gradient button webide" target="_blank">Web IDE</a>
+</div>
+<div class='item toschina-content__hidden'>
+<a href="/zscat/mallplus/widget" class="ui gradient button repo-action"><i class='iconfont icon-widget icon-orange'></i>
+挂件
+</a></div>
+</div>
+<script>
+  $('#git-project-file').dropdown({ action: 'hide' });
+</script>
+</div>
+
+</div>
+<div class='item breadcrumb_path path-breadcrumb-contrainer' id='git-project-breadcrumb'>
+
+</div>
+</div>
+</div>
+
+<style>
+  .ui.dropdown .menu>.header{text-transform:none}
+</style>
+<script>
+  $(document).ready(function () {
+    var $gitProjectSummary = $('#git-project-summary');
+    var $gitProjectLanguages = $gitProjectSummary.find('.summary-languages');
+    var $statsSwitcherWrapper = $gitProjectSummary.find('.viewer-wrapper');
+    var $contributorCount = $gitProjectSummary.find('.contributor-count');
+    var $contributorText = $gitProjectSummary.find('.contributor-text');
+    var contributorsCountUrl = $contributorCount.data('url');
+  
+    $gitProjectLanguages.on('click', function() {
+      $statsSwitcherWrapper.toggleClass('js-lang');
+    });
+  
+    $.ajax({
+      url: contributorsCountUrl,
+      method: 'GET',
+      success: function(data) {
+        if (data.status === 1) {
+          $contributorCount.text(data.contributors_count);
+          $contributorText.text('位贡献者')
+        } else {
+          $contributorText.text('获取失败')
+        }
+      }
+    });
+    var $tip = $('#apk-download-tip');
+    if (!$tip.length) {
+      return;
+    }
+    $tip.find('.btn-close').on('click', function () {
+      $tip.slideUp();
+    });
+  });
+  (function(){
+    function pathAutoRender() {
+      var $parent = $('#git-project-bread'),
+          $child = $('#git-project-bread').children('.ui.horizontal.list'),
+          mainWidth = 0;
+      $child.each(function (i,item) {
+        mainWidth += $(item).width()
+        });
+      $('.breadcrumb.path.fork-path').remove();
+      if (mainWidth > 995) {
+        $('#path-breadcrumb').hide();
+        $parent.append('<div class="ui breadcrumb path fork-path">' + $('#path-breadcrumb').html() + '<div/>')
+      } else {
+        $('#path-breadcrumb').show();
+      }
+    }
+    window.pathAutoRender = pathAutoRender;
+    pathAutoRender();
+  })();
+</script>
+
+<div class='row column tree-holder' id='tree-holder'>
+<div class='tree-content-holder' id='tree-content-holder'>
+<div class='ui flat nopadding segment tree-content'>
+<div class='git-project-recent-commit' id='git-project-info'>
+<div class='twelve wide column content float-left recent-commit'>
+<a href="/catshen" class="commit-author-link"><img alt="" avatar="zhuan" class="mini avatar circular ui image 20" width="20" /> <span class="commit-author-name">zhuan</span></a>
+最后提交于
+<span class='timeago' datetime='2019-10-08 20:35' title='2019-10-08 20:35:19 +0800'></span>
+<a href="/zscat/mallplus/commit/79ce0b6e01a74485f10bc94a4ccf84e086090226" class="repo-index-commit-msg" title="123">123</a>
+</div>
+<div class='clearfix'></div>
+</div>
+
+<div class='grid list selection table_da39a3ee5e6b4b0d3255bfef95601890afd80709 tree-table ui' id='tree-slider'>
+<div class='create-folder-form form ui'>
+<form accept-charset="UTF-8" action="/zscat/mallplus/new/master" id="folder_form-edit" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="bNVpblCwKg87bsRhXWsdEi+x9E3FSuT0bct2Txxn96c=" /></div>
+<div class='fields'>
+<div class='field'>
+<input id="new_file_path" name="new_file_path" type="hidden" />
+<input id="content" name="content" type="hidden" />
+<input id='new_folder_path' name='new_folder_path' placeholder='新建文件夹' type='text'>
+</div>
+<div class='field'>
+<button class="ui primary button orange submit field-init-btn js-submit-btn" name="button" type="submit">提交</button>
+<a href="javascript:void(0)" class="ui basic white button cancel field-init-btn">取消</a>
+</div>
+<div class='ui mid-center small message notice'>
+<strong>提示:</strong>
+由于 Git 不支持空文件夾，创建文件夹后会生成空的 .keep 文件
+</div>
+</div>
+</form>
+
+</div>
+<div class='file_4f8278c89ad16da05fec4fdfc61fe44798b92720 row tree-item' data-branch='master' data-type='folder' file_hex='file_4f8278c89ad16da05fec4fdfc61fe44798b92720'>
+<div class='five wide column tree-item-file-name tree-folder tree-list-item' data-path='document' data-type='folder'>
+<i class="iconfont icon-folders"></i>
+<a href="/zscat/mallplus/tree/master/document" title="document"><span class='simplified-path'>
+
+</span>
+document
+</a></div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/a49507db85a9c0b9094bec8e1d6d70a23dae4c47" class="tree-commit-link" title="部署">部署</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-25 15:17' title='2019-04-25 15:17:13 +0800'></span>
+</div>
+</div>
+<div class='rename-file_4f8278c89ad16da05fec4fdfc61fe44798b92720 row tree-item tree-item-rename' file_hex='file_4f8278c89ad16da05fec4fdfc61fe44798b92720' style='display:none'>
+<div class='ui column form' path='tree/master/document'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='document'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_6cd15f20a03deaaa8711a70661a84c3d7d8e019b row tree-item' data-branch='master' data-type='folder' file_hex='file_6cd15f20a03deaaa8711a70661a84c3d7d8e019b'>
+<div class='five wide column tree-item-file-name tree-folder tree-list-item' data-path='mall-admin' data-type='folder'>
+<i class="iconfont icon-folders"></i>
+<a href="/zscat/mallplus/tree/master/mall-admin" title="mall-admin"><span class='simplified-path'>
+
+</span>
+mall-admin
+</a></div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/cee5e03b79808aa10c4d50a4fe819c8de010cd0f" class="tree-commit-link" title="权限 redis缓存优化">权限 redis缓存优化</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-26 21:58' title='2019-04-26 21:58:53 +0800'></span>
+</div>
+</div>
+<div class='rename-file_6cd15f20a03deaaa8711a70661a84c3d7d8e019b row tree-item tree-item-rename' file_hex='file_6cd15f20a03deaaa8711a70661a84c3d7d8e019b' style='display:none'>
+<div class='ui column form' path='tree/master/mall-admin'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='mall-admin'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_45d44dbf3c3d01ae482121bcb99b16c696cada0b row tree-item' data-branch='master' data-type='folder' file_hex='file_45d44dbf3c3d01ae482121bcb99b16c696cada0b'>
+<div class='five wide column tree-item-file-name tree-folder tree-list-item' data-path='mall-mbg' data-type='folder'>
+<i class="iconfont icon-folders"></i>
+<a href="/zscat/mallplus/tree/master/mall-mbg" title="mall-mbg"><span class='simplified-path'>
+
+</span>
+mall-mbg
+</a></div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/90c09726bccbfccc237673561a6d312486f7ce97" class="tree-commit-link" title="商品模块修复">商品模块修复</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-25 10:40' title='2019-04-25 10:40:41 +0800'></span>
+</div>
+</div>
+<div class='rename-file_45d44dbf3c3d01ae482121bcb99b16c696cada0b row tree-item tree-item-rename' file_hex='file_45d44dbf3c3d01ae482121bcb99b16c696cada0b' style='display:none'>
+<div class='ui column form' path='tree/master/mall-mbg'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='mall-mbg'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_d410199a9c070981e5d54cb24e128f7317d6a679 row tree-item' data-branch='master' data-type='folder' file_hex='file_d410199a9c070981e5d54cb24e128f7317d6a679'>
+<div class='five wide column tree-item-file-name tree-folder tree-list-item' data-path='mall-portal' data-type='folder'>
+<i class="iconfont icon-folders"></i>
+<a href="/zscat/mallplus/tree/master/mall-portal" title="mall-portal"><span class='simplified-path'>
+
+</span>
+mall-portal
+</a></div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/a8773ba59dd97c76c5cac18319a1191ad5e643f7" class="tree-commit-link" title="商品模块修复">商品模块修复</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-27 08:58' title='2019-04-27 08:58:50 +0800'></span>
+</div>
+</div>
+<div class='rename-file_d410199a9c070981e5d54cb24e128f7317d6a679 row tree-item tree-item-rename' file_hex='file_d410199a9c070981e5d54cb24e128f7317d6a679' style='display:none'>
+<div class='ui column form' path='tree/master/mall-portal'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='mall-portal'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_a5cc2925ca8258af241be7e5b0381edf30266302 row tree-item' data-branch='master' data-type='file' file_hex='file_a5cc2925ca8258af241be7e5b0381edf30266302'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='.gitignore' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/.gitignore" title=".gitignore">.gitignore</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/ef8b88f19bc1407451d5270e01851919bbc50c77" class="tree-commit-link" title="dao">dao</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-16 16:03' title='2019-04-16 16:03:13 +0800'></span>
+</div>
+</div>
+<div class='rename-file_a5cc2925ca8258af241be7e5b0381edf30266302 row tree-item tree-item-rename' file_hex='file_a5cc2925ca8258af241be7e5b0381edf30266302' style='display:none'>
+<div class='ui column form' path='blob/master/.gitignore'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='.gitignore'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_35609ff81e76d22c2b7da28ae67045f89a4c785b row tree-item' data-branch='master' data-type='file' file_hex='file_35609ff81e76d22c2b7da28ae67045f89a4c785b'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='2019-03-15' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/2019-03-15" title="2019-03-15">2019-03-15</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/90c09726bccbfccc237673561a6d312486f7ce97" class="tree-commit-link" title="商品模块修复">商品模块修复</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-25 10:40' title='2019-04-25 10:40:41 +0800'></span>
+</div>
+</div>
+<div class='rename-file_35609ff81e76d22c2b7da28ae67045f89a4c785b row tree-item tree-item-rename' file_hex='file_35609ff81e76d22c2b7da28ae67045f89a4c785b' style='display:none'>
+<div class='ui column form' path='blob/master/2019-03-15'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='2019-03-15'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_0398ccd0f49298b10a3d76a47800d2ebecd49859 row tree-item' data-branch='master' data-type='file' file_hex='file_0398ccd0f49298b10a3d76a47800d2ebecd49859'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='LICENSE' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/LICENSE" title="LICENSE">LICENSE</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/ef8b88f19bc1407451d5270e01851919bbc50c77" class="tree-commit-link" title="dao">dao</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-16 16:03' title='2019-04-16 16:03:13 +0800'></span>
+</div>
+</div>
+<div class='rename-file_0398ccd0f49298b10a3d76a47800d2ebecd49859 row tree-item tree-item-rename' file_hex='file_0398ccd0f49298b10a3d76a47800d2ebecd49859' style='display:none'>
+<div class='ui column form' path='blob/master/LICENSE'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='LICENSE'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_83850598561eb6f37d78f59e1a3dbe20c462a409 row tree-item' data-branch='master' data-type='file' file_hex='file_83850598561eb6f37d78f59e1a3dbe20c462a409'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='README-DEV.md' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/README-DEV.md" title="README-DEV.md">README-DEV.md</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/ef8b88f19bc1407451d5270e01851919bbc50c77" class="tree-commit-link" title="dao">dao</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-16 16:03' title='2019-04-16 16:03:13 +0800'></span>
+</div>
+</div>
+<div class='rename-file_83850598561eb6f37d78f59e1a3dbe20c462a409 row tree-item tree-item-rename' file_hex='file_83850598561eb6f37d78f59e1a3dbe20c462a409' style='display:none'>
+<div class='ui column form' path='blob/master/README-DEV.md'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='README-DEV.md'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d row tree-item' data-branch='master' data-type='file' file_hex='file_8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='README.md' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/README.md" title="README.md">README.md</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/79ce0b6e01a74485f10bc94a4ccf84e086090226" class="tree-commit-link" title="123">123</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-10-08 20:35' title='2019-10-08 20:35:19 +0800'></span>
+</div>
+</div>
+<div class='rename-file_8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d row tree-item tree-item-rename' file_hex='file_8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d' style='display:none'>
+<div class='ui column form' path='blob/master/README.md'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='README.md'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_460181ca6fdd65719dbade1dfea87337097b0adb row tree-item' data-branch='master' data-type='file' file_hex='file_460181ca6fdd65719dbade1dfea87337097b0adb'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='mallplus-admin-web.zip' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/mallplus-admin-web.zip" title="mallplus-admin-web.zip">mallplus-admin-web.zip</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/ac42ac075930a8375835e6e8d069dcb54793f03a" class="tree-commit-link" title="后台前端 vue">后台前端 vue</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-25 14:43' title='2019-04-25 14:43:31 +0800'></span>
+</div>
+</div>
+<div class='rename-file_460181ca6fdd65719dbade1dfea87337097b0adb row tree-item tree-item-rename' file_hex='file_460181ca6fdd65719dbade1dfea87337097b0adb' style='display:none'>
+<div class='ui column form' path='blob/master/mallplus-admin-web.zip'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='mallplus-admin-web.zip'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_1283aaaea3a61e6bbd957ae1fd4dd8f938097c91 row tree-item' data-branch='master' data-type='file' file_hex='file_1283aaaea3a61e6bbd957ae1fd4dd8f938097c91'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='mallplus.sql' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/mallplus.sql" title="mallplus.sql">mallplus.sql</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/9af899354bb1aafaeec6496c7391544b66edec78" class="tree-commit-link" title="商品模块修复">商品模块修复</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-24 23:05' title='2019-04-24 23:05:48 +0800'></span>
+</div>
+</div>
+<div class='rename-file_1283aaaea3a61e6bbd957ae1fd4dd8f938097c91 row tree-item tree-item-rename' file_hex='file_1283aaaea3a61e6bbd957ae1fd4dd8f938097c91' style='display:none'>
+<div class='ui column form' path='blob/master/mallplus.sql'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='mallplus.sql'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_442292b8a7efeabbe4cc176709b833b1792140ec row tree-item' data-branch='master' data-type='file' file_hex='file_442292b8a7efeabbe4cc176709b833b1792140ec'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='pom.xml' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/pom.xml" title="pom.xml">pom.xml</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/b53a9f199ad1ad465e175917137be573277e9d20" class="tree-commit-link" title="dao">dao</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-18 13:34' title='2019-04-18 13:34:41 +0800'></span>
+</div>
+</div>
+<div class='rename-file_442292b8a7efeabbe4cc176709b833b1792140ec row tree-item tree-item-rename' file_hex='file_442292b8a7efeabbe4cc176709b833b1792140ec' style='display:none'>
+<div class='ui column form' path='blob/master/pom.xml'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='pom.xml'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_a94a8fe5ccb19ba61c4c0873d391e987982fbbd3 row tree-item' data-branch='master' data-type='file' file_hex='file_a94a8fe5ccb19ba61c4c0873d391e987982fbbd3'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='test' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/test" title="test">test</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/ef8b88f19bc1407451d5270e01851919bbc50c77" class="tree-commit-link" title="dao">dao</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-16 16:03' title='2019-04-16 16:03:13 +0800'></span>
+</div>
+</div>
+<div class='rename-file_a94a8fe5ccb19ba61c4c0873d391e987982fbbd3 row tree-item tree-item-rename' file_hex='file_a94a8fe5ccb19ba61c4c0873d391e987982fbbd3' style='display:none'>
+<div class='ui column form' path='blob/master/test'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='test'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+<div class='file_06989210284894cab28f521c778b216a946168e0 row tree-item' data-branch='master' data-type='file' file_hex='file_06989210284894cab28f521c778b216a946168e0'>
+<div class='five wide column tree-item-file-name tree-file tree-list-item' data-path='小程序功能列表' data-type='file'>
+<i class="iconfont icon-file"></i>
+<a href="/zscat/mallplus/blob/master/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8A%9F%E8%83%BD%E5%88%97%E8%A1%A8" title="小程序功能列表">小程序功能列表</a>
+</div>
+<div class='nine wide column tree_author'>
+<div class='commit-details'>
+<a href="/zscat/mallplus/commit/7683c7810195716924c7aa6d546cd3998beaa86f" class="tree-commit-link" title="代码生成其他模块">代码生成其他模块</a>
+</div>
+</div>
+<div class='two wide column right aligned tree_time_ago'>
+<span class='timeago' datetime='2019-04-20 09:44' title='2019-04-20 09:44:49 +0800'></span>
+</div>
+</div>
+<div class='rename-file_06989210284894cab28f521c778b216a946168e0 row tree-item tree-item-rename' file_hex='file_06989210284894cab28f521c778b216a946168e0' style='display:none'>
+<div class='ui column form' path='blob/master/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8A%9F%E8%83%BD%E5%88%97%E8%A1%A8'>
+<div class='two fields'>
+<div class='five wide field'>
+<input class='ui input' name='new_filename' type='text' value='小程序功能列表'>
+</div>
+<div class='five wide field'>
+<button class='ui blue button popup-save' type='submit'>保存</button>
+<button class='ui basic button popup-close'>取消</button>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+<div class='ui tree_progress'>
+<div class='ui active inverted dimmer'>
+<div class='ui small text loader'>Loading...</div>
+</div>
+</div>
+<div class='readme-box' id='git-readme'>
+<div class='ui flat nopadding segment file_holder'>
+<div class='file_title'>
+<i class='iconfont icon-readme'></i>
+<span class='file_name'>
+README.md
+</span>
+</div>
+<div class='file_content markdown-body'>
+<h1>&#x000A;<a id="mall" class="anchor" href="#mall"></a>mall</h1>&#x000A;<p><a href="http://yjlive.cn:8084/#/">文档blog</a></p>&#x000A;<ul>&#x000A;<li>商户入驻流程  <a href="https://gitee.com/zscat/mallplus/wikis/pages/preview?sort_id=1634420&amp;doc_id=326093">https://gitee.com/zscat/mallplus/wikis/pages/preview?sort_id=1634420&amp;doc_id=326093</a>&#x000A;</li>&#x000A;<li>单机版项目地址 <a href="https://gitee.com/zscat/mallplus">https://gitee.com/zscat/mallplus</a>&#x000A;</li>&#x000A;<li>前端vue 项目路径下有一个zip包</li>&#x000A;<li>文档详情blog <a href="http://yjlive.cn:8084/">http://yjlive.cn:8084/</a>&#x000A;</li>&#x000A;<li>后台端 <a href="http://yjlive.cn:8086/index">http://yjlive.cn:8086/index</a>&#x000A;</li>&#x000A;<li>商户端演示  <a href="http://yjlive.cn:8090/">http://yjlive.cn:8090/</a>&#x000A;</li>&#x000A;<li>uniapp h5演示  <a href="http://yjlive.cn:8082/">http://yjlive.cn:8082/</a>&#x000A;</li>&#x000A;<li>pc演示  <a href="http://yjlive.cn:8084/">http://yjlive.cn:8084/</a>&#x000A;</li>&#x000A;<li>vue h5演示  <a href="http://yjlive.cn:8083/">http://yjlive.cn:8083/</a>&#x000A;</li>&#x000A;<li>部署地址 <a href="https://www.kancloud.cn/mall-plus/tech/1212454">https://www.kancloud.cn/mall-plus/tech/1212454</a>&#x000A;</li>&#x000A;<li>微服务版项目地址 <a href="https://gitee.com/catshen/zscat_sw">https://gitee.com/catshen/zscat_sw</a>&#x000A;</li>&#x000A;<li>前端vue 项目路径下有一个zip包</li>&#x000A;<li>部署地址 <a href="https://gitee.com/catshen/zscat_sw/wikis/pages?sort_id=1551918&amp;doc_id=364094">https://gitee.com/catshen/zscat_sw/wikis/pages?sort_id=1551918&amp;doc_id=364094</a>&#x000A;</li>&#x000A;</ul>&#x000A;<h2>&#x000A;<a id="说明" class="anchor" href="#%E8%AF%B4%E6%98%8E"></a>说明</h2>&#x000A;<blockquote>&#x000A;<p>基于SpringBoot+MyBatis-plus的电商系统，包括前台商城系统及后台管理系统。</p>&#x000A;</blockquote>&#x000A;<blockquote>&#x000A;<p>如果该项目对您有帮助，您可以点右上角 "Star" 支持一下 谢谢！</p>&#x000A;</blockquote>&#x000A;<blockquote>&#x000A;<p>或者您可以 "follow" 一下，该项目将持续更新，不断完善功能。</p>&#x000A;</blockquote>&#x000A;<blockquote>&#x000A;<p>项目交流人QQ群：[895616401]</p>&#x000A;</blockquote>&#x000A;<blockquote>&#x000A;<p>如有问题或者好的建议可以在 Issues 中提。</p>&#x000A;</blockquote>&#x000A;<h2>&#x000A;<a id="前言" class="anchor" href="#%E5%89%8D%E8%A8%80"></a>前言</h2>&#x000A;<p><code>mallplus</code>项目致力于打造一个完整的电商系统，采用现阶段流行技术实现。</p>&#x000A;<h2>&#x000A;<a id="项目介绍" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"></a>项目介绍</h2>&#x000A;<p><code>mallplus</code>项目是一套电商系统，包括前台商城系统及后台管理系统，小程序，h5，基于SpringBoot+MyBatis实现。&#x000A;前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。&#x000A;后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、代码生成设置等模块。</p>&#x000A;<h3>&#x000A;<a id="项目演示" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA"></a>项目演示</h3>&#x000A;<blockquote>&#x000A;<p>后台管理系统</p>&#x000A;</blockquote>&#x000A;<p>小程序下载 地址 <a href="https://gitee.com/catshen/mobile-mall">https://gitee.com/catshen/mobile-mall</a>&#x000A;后台管理下载地址 <a href="https://gitee.com/zscat/mallplus">https://gitee.com/zscat/mallplus</a>&#x000A;项目演示地址： <a href="http://39.98.190.128/index.html">http://39.98.190.128/index.html</a></p>&#x000A;<p><img src="/zscat/mallplus/raw/master/document/resource/mall-admin.gif" alt="后台管理系统功能演示.gif"></p>&#x000A;<h4>&#x000A;<a id="项目演示-1" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E6%BC%94%E7%A4%BA-1"></a>项目演示</h4>&#x000A;<ul>&#x000A;<li>&#x000A;<p>H5体验地址：<a href="http://www.yjlive.cn:8082">http://www.yjlive.cn:8082</a></p>&#x000A;</li>&#x000A;<li>&#x000A;<p>后台体验地址：<a href="http://www.yjlive.cn:8090/#/login">http://www.yjlive.cn:8090/#/login</a></p>&#x000A;</li>&#x000A;<li>&#x000A;<p>QQ交流群：895616401（开发手册、接口文档、操作手册请进群查看哦~）</p>&#x000A;</li>&#x000A;<li>&#x000A;<p>交流社区：<a href="https://bbs.jihainet.com/">https://bbs.jihainet.com/</a></p>&#x000A;</li>&#x000A;<li>&#x000A;<p>微信小程序体验码</p>&#x000A;</li>&#x000A;</ul>&#x000A;<p><img src="https://images.gitee.com/uploads/images/2019/0906/120657_8459b6d0_134431.png" alt="输入图片说明" title="applet.png"></p>&#x000A;<ul>&#x000A;<li>qq小程序体验二维码</li>&#x000A;</ul>&#x000A;<p><img src="https://images.gitee.com/uploads/images/2019/0906/101552_d7930b7f_134431.png" alt="输入图片说明" title="qqapplet.png"></p>&#x000A;<ul>&#x000A;<li>支付宝小程序体验二维码</li>&#x000A;</ul>&#x000A;<p><img src="https://images.gitee.com/uploads/images/2019/0906/101538_bc52f965_134431.jpeg" alt="输入图片说明" title="alpayApplet.jpg"></p>&#x000A;<ul>&#x000A;<li>apk体验二维码  加群下载 895616401</li>&#x000A;</ul>&#x000A;<h3>&#x000A;<a id="组织结构" class="anchor" href="#%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"></a>组织结构</h3>&#x000A;<div class="white"><div class="highlight"><pre><span id="LC1" class="line"><span class="n">mall</span></span>&#x000A;<span id="LC2" class="line"><span class="err">├──</span> <span class="n">mall</span><span class="o">-</span><span class="n">mbg</span> <span class="c1">-- MyBatisGenerator生成的数据库操作代码</span></span>&#x000A;<span id="LC3" class="line"><span class="err">├──</span> <span class="n">mall</span><span class="o">-</span><span class="n">admin</span> <span class="c1">-- 后台商城管理系统接口</span></span>&#x000A;<span id="LC4" class="line"><span class="err">├──</span> <span class="n">mall</span><span class="o">-</span><span class="n">search</span> <span class="c1">-- 基于Elasticsearch的商品搜索系统</span></span>&#x000A;<span id="LC5" class="line"><span class="err">├──</span> <span class="n">mall</span><span class="o">-</span><span class="n">portal</span> <span class="c1">-- 前台商城系统接口</span></span>&#x000A;<span id="LC6" class="line"><span class="err">└──</span> <span class="n">mall</span><span class="o">-</span><span class="n">demo</span> <span class="c1">-- 框架搭建时的测试代码</span></span>&#x000A;<span id="LC7" class="line"><span class="err">├──</span> <span class="err">前端项目`</span><span class="n">mall</span><span class="o">-</span><span class="n">admin</span><span class="o">-</span><span class="n">web</span><span class="err">`</span>  <span class="err">地址</span> <span class="err">请加群下载</span>  </span>&#x000A;<span id="LC8" class="line"><span class="err">├──</span> <span class="n">h5</span><span class="err">前端项目`</span><span class="n">uniapp</span><span class="err">`地址</span> <span class="err">请加群下载</span>  </span>&#x000A;<span id="LC9" class="line"><span class="err">├──</span> <span class="err">小前端项目`</span><span class="n">uniapp</span><span class="err">`地址</span> <span class="err">请加群下载</span></span></pre></div></div>&#x000A;<p>关注公众号&#x000A;<img src="https://images.gitee.com/uploads/images/2019/0519/174631_65c2a4e8_134431.png" width="80px" height="80px"></p>&#x000A;<p>后台功能列表&#x000A;<img src="https://images.gitee.com/uploads/images/2019/0519/170418_d276b6b4_134431.png">&#x000A;小程序功能列表&#x000A;<img src="https://images.gitee.com/uploads/images/2019/0519/170631_20a127ce_134431.png"></p>&#x000A;<p><strong><em>uniapp</em></strong></p>&#x000A;<p>uni-app 是一个使用 Vue.js 开发跨平台应用的前端框架，开发者编写一套代码，可编译到iOS、Android、H5、小程序等多个平台。</p>&#x000A;<img src="https://images.gitee.com/uploads/images/2019/0528/141610_0b812292_134431.jpeg">&#x000A;<h4>&#x000A;<a id="后端技术" class="anchor" href="#%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF"></a>后端技术</h4>&#x000A;<table>&#x000A;<thead>&#x000A;<tr>&#x000A;<th>技术</th>&#x000A;<th>说明</th>&#x000A;<th>官网</th>&#x000A;</tr>&#x000A;</thead>&#x000A;</table>&#x000A;<p>Spring Boot | 容器+MVC框架 | <a href="https://spring.io/projects/spring-boot">https://spring.io/projects/spring-boot</a>&#x000A;Spring Security | 认证和授权框架 | <a href="https://spring.io/projects/spring-security">https://spring.io/projects/spring-security</a>&#x000A;MyBatis | ORM框架  | <a href="http://www.mybatis.org/mybatis-3/zh/index.html">http://www.mybatis.org/mybatis-3/zh/index.html</a>&#x000A;MyBatisGenerator | 数据层代码生成 | <a href="http://www.mybatis.org/generator/index.html">http://www.mybatis.org/generator/index.html</a>&#x000A;PageHelper | MyBatis物理分页插件 | <a href="http://git.oschina.net/free/Mybatis_PageHelper">http://git.oschina.net/free/Mybatis_PageHelper</a>&#x000A;Swagger-UI | 文档生产工具 | <a href="https://github.com/swagger-api/swagger-ui">https://github.com/swagger-api/swagger-ui</a>&#x000A;Hibernator-Validator | 验证框架 | <a href="http://hibernate.org/validator/">http://hibernate.org/validator/</a>&#x000A;Elasticsearch | 搜索引擎 | <a href="https://github.com/elastic/elasticsearch">https://github.com/elastic/elasticsearch</a>&#x000A;RabbitMq | 消息队列 | <a href="https://www.rabbitmq.com/">https://www.rabbitmq.com/</a>&#x000A;Redis | 分布式缓存 | <a href="https://redis.io/">https://redis.io/</a>&#x000A;MongoDb | NoSql数据库 | <a href="https://www.mongodb.com/">https://www.mongodb.com/</a>&#x000A;Docker | 应用容器引擎 | <a href="https://www.docker.com/">https://www.docker.com/</a>&#x000A;Druid | 数据库连接池 | <a href="https://github.com/alibaba/druid">https://github.com/alibaba/druid</a>&#x000A;OSS | 对象存储 | <a href="https://github.com/aliyun/aliyun-oss-java-sdk">https://github.com/aliyun/aliyun-oss-java-sdk</a>&#x000A;JWT | JWT登录支持 | <a href="https://github.com/jwtk/jjwt">https://github.com/jwtk/jjwt</a>&#x000A;LogStash | 日志收集 | <a href="https://github.com/logstash/logstash-logback-encoder">https://github.com/logstash/logstash-logback-encoder</a>&#x000A;Lombok | 简化对象封装工具 | <a href="https://github.com/rzwitserloot/lombok">https://github.com/rzwitserloot/lombok</a></p>&#x000A;<h4>&#x000A;<a id="前端技术" class="anchor" href="#%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF"></a>前端技术</h4>&#x000A;<table>&#x000A;<thead>&#x000A;<tr>&#x000A;<th>技术</th>&#x000A;<th>说明</th>&#x000A;<th>官网</th>&#x000A;</tr>&#x000A;</thead>&#x000A;<tbody>&#x000A;<tr>&#x000A;<td>Vue</td>&#x000A;<td>前端框架</td>&#x000A;<td><a href="https://vuejs.org/">https://vuejs.org/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Vue-router</td>&#x000A;<td>路由框架</td>&#x000A;<td><a href="https://router.vuejs.org/">https://router.vuejs.org/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Vuex</td>&#x000A;<td>全局状态管理框架</td>&#x000A;<td><a href="https://vuex.vuejs.org/">https://vuex.vuejs.org/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Element</td>&#x000A;<td>前端UI框架</td>&#x000A;<td><a href="https://element.eleme.io/">https://element.eleme.io/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Axios</td>&#x000A;<td>前端HTTP框架</td>&#x000A;<td><a href="https://github.com/axios/axios">https://github.com/axios/axios</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>v-charts</td>&#x000A;<td>基于Echarts的图表框架</td>&#x000A;<td><a href="https://v-charts.js.org/">https://v-charts.js.org/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Js-cookie</td>&#x000A;<td>cookie管理工具</td>&#x000A;<td><a href="https://github.com/js-cookie/js-cookie">https://github.com/js-cookie/js-cookie</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>nprogress</td>&#x000A;<td>进度条控件</td>&#x000A;<td><a href="https://github.com/rstacruz/nprogress">https://github.com/rstacruz/nprogress</a></td>&#x000A;</tr>&#x000A;</tbody>&#x000A;</table>&#x000A;<h4>&#x000A;<a id="架构图" class="anchor" href="#%E6%9E%B6%E6%9E%84%E5%9B%BE"></a>架构图</h4>&#x000A;<h5>&#x000A;<a id="系统架构图" class="anchor" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE"></a>系统架构图</h5>&#x000A;<p><img src="/zscat/mallplus/raw/master/document/resource/mall_system_arch.png" alt="系统架构图"></p>&#x000A;<h5>&#x000A;<a id="业务架构图" class="anchor" href="#%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%9B%BE"></a>业务架构图</h5>&#x000A;<p><img src="/zscat/mallplus/raw/master/document/resource/mall_business_arch.png" alt="系统架构图"></p>&#x000A;<h4>&#x000A;<a id="模块介绍" class="anchor" href="#%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"></a>模块介绍</h4>&#x000A;<h5>&#x000A;<a id="后台管理系统-mall-admin" class="anchor" href="#%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-mall-admin"></a>后台管理系统 <code>mall-admin</code>&#x000A;</h5>&#x000A;<ul>&#x000A;<li>商品管理：<a href="/zscat/mallplus/blob/master/document/resource/mind_product.jpg">功能结构图-商品.jpg</a>&#x000A;</li>&#x000A;<li>订单管理：<a href="/zscat/mallplus/blob/master/document/resource/mind_order.jpg">功能结构图-订单.jpg</a>&#x000A;</li>&#x000A;<li>促销管理：<a href="/zscat/mallplus/blob/master/document/resource/mind_sale.jpg">功能结构图-促销.jpg</a>&#x000A;</li>&#x000A;<li>内容管理：<a href="/zscat/mallplus/blob/master/document/resource/mind_content.jpg">功能结构图-内容.jpg</a>&#x000A;</li>&#x000A;<li>用户管理：<a href="/zscat/mallplus/blob/master/document/resource/mind_member.jpg">功能结构图-用户.jpg</a>&#x000A;</li>&#x000A;</ul>&#x000A;<h5>&#x000A;<a id="前台商城系统-mall-portal" class="anchor" href="#%E5%89%8D%E5%8F%B0%E5%95%86%E5%9F%8E%E7%B3%BB%E7%BB%9F-mall-portal"></a>前台商城系统 <code>mall-portal</code>&#x000A;</h5>&#x000A;<p><a href="/zscat/mallplus/blob/master/document/resource/mind_portal.jpg">功能结构图-前台.jpg</a></p>&#x000A;<h4>&#x000A;<a id="开发进度" class="anchor" href="#%E5%BC%80%E5%8F%91%E8%BF%9B%E5%BA%A6"></a>开发进度</h4>&#x000A;<p><img src="/zscat/mallplus/raw/master/document/resource/mall_dev_flow.png" alt="项目开发进度图"></p>&#x000A;<h2>&#x000A;<a id="环境搭建" class="anchor" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"></a>环境搭建</h2>&#x000A;<h3>&#x000A;<a id="开发工具" class="anchor" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"></a>开发工具</h3>&#x000A;<table>&#x000A;<thead>&#x000A;<tr>&#x000A;<th>工具</th>&#x000A;<th>说明</th>&#x000A;<th>官网</th>&#x000A;</tr>&#x000A;</thead>&#x000A;<tbody>&#x000A;<tr>&#x000A;<td>IDEA</td>&#x000A;<td>开发IDE</td>&#x000A;<td><a href="https://www.jetbrains.com/idea/download">https://www.jetbrains.com/idea/download</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>RedisDesktop</td>&#x000A;<td>redis客户端连接工具</td>&#x000A;<td><a href="https://redisdesktop.com/download">https://redisdesktop.com/download</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Robomongo</td>&#x000A;<td>mongo客户端连接工具</td>&#x000A;<td><a href="https://robomongo.org/download">https://robomongo.org/download</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>SwitchHosts</td>&#x000A;<td>本地host管理</td>&#x000A;<td><a href="https://oldj.github.io/SwitchHosts/">https://oldj.github.io/SwitchHosts/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>X-shell</td>&#x000A;<td>Linux远程连接工具</td>&#x000A;<td><a href="http://www.netsarang.com/download/software.html">http://www.netsarang.com/download/software.html</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Navicat</td>&#x000A;<td>数据库连接工具</td>&#x000A;<td><a href="http://www.formysql.com/xiazai.html">http://www.formysql.com/xiazai.html</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>PowerDesigner</td>&#x000A;<td>数据库设计工具</td>&#x000A;<td><a href="http://powerdesigner.de/">http://powerdesigner.de/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Axure</td>&#x000A;<td>原型设计工具</td>&#x000A;<td><a href="https://www.axure.com/">https://www.axure.com/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>MindMaster</td>&#x000A;<td>思维导图设计工具</td>&#x000A;<td><a href="http://www.edrawsoft.cn/mindmaster">http://www.edrawsoft.cn/mindmaster</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>ScreenToGif</td>&#x000A;<td>gif录制工具</td>&#x000A;<td><a href="https://www.screentogif.com/">https://www.screentogif.com/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>ProcessOn</td>&#x000A;<td>流程图绘制工具</td>&#x000A;<td><a href="https://www.processon.com/">https://www.processon.com/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>PicPick</td>&#x000A;<td>屏幕取色工具</td>&#x000A;<td><a href="https://picpick.app/zh/">https://picpick.app/zh/</a></td>&#x000A;</tr>&#x000A;</tbody>&#x000A;</table>&#x000A;<h3>&#x000A;<a id="开发环境" class="anchor" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"></a>开发环境</h3>&#x000A;<table>&#x000A;<thead>&#x000A;<tr>&#x000A;<th>工具</th>&#x000A;<th>版本号</th>&#x000A;<th>下载</th>&#x000A;</tr>&#x000A;</thead>&#x000A;<tbody>&#x000A;<tr>&#x000A;<td>JDK</td>&#x000A;<td>1.8</td>&#x000A;<td><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Mysql</td>&#x000A;<td>5.7</td>&#x000A;<td><a href="https://www.mysql.com/">https://www.mysql.com/</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Redis</td>&#x000A;<td>3.2</td>&#x000A;<td><a href="https://redis.io/download">https://redis.io/download</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>Elasticsearch</td>&#x000A;<td>2.4.6</td>&#x000A;<td><a href="https://www.elastic.co/downloads">https://www.elastic.co/downloads</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>MongoDb</td>&#x000A;<td>3.2</td>&#x000A;<td><a href="https://www.mongodb.com/download-center">https://www.mongodb.com/download-center</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>RabbitMq</td>&#x000A;<td>5.25</td>&#x000A;<td><a href="http://www.rabbitmq.com/download.html">http://www.rabbitmq.com/download.html</a></td>&#x000A;</tr>&#x000A;<tr>&#x000A;<td>nginx</td>&#x000A;<td>1.10</td>&#x000A;<td><a href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></td>&#x000A;</tr>&#x000A;</tbody>&#x000A;</table>&#x000A;<h3>&#x000A;<a id="搭建步骤" class="anchor" href="#%E6%90%AD%E5%BB%BA%E6%AD%A5%E9%AA%A4"></a>搭建步骤</h3>&#x000A;<blockquote>&#x000A;<p>本地环境搭建</p>&#x000A;</blockquote>&#x000A;<ul>&#x000A;<li>本地安装开发环境中的所有工具并启动，具体参考</li>&#x000A;<li>安装最新的数据库mallplus.sql，解压 前端vue mallplsu-admin-web.zip</li>&#x000A;<li>克隆源代码到本地，使用IDEA或Eclipse打开，并完成编译;</li>&#x000A;<li>在mysql中新建mall数据库，导入document/sql下的mall.sql文件；</li>&#x000A;<li>启动mall-admin项目：直接运行com.zscat.mallplus.MallAdminApplication的main方法即可，&#x000A;接口文档地址：<a href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a>;</li>&#x000A;<li>启动mall-search项目：直接运行com.zscat.mallplus.search.MallSearchApplication的main方法即可，&#x000A;接口文档地址：<a href="http://localhost:8081/swagger-ui.html">http://localhost:8081/swagger-ui.html</a>;</li>&#x000A;<li>启动mall-portal项目：直接运行com.zscat.mallplus.portal.MallPortalApplication的main方法即可，&#x000A;接口文档地址：<a href="http://localhost:8085/swagger-ui.html">http://localhost:8085/swagger-ui.html</a>;</li>&#x000A;</ul>&#x000A;<h2>&#x000A;<a id="项目相关文档" class="anchor" href="#%E9%A1%B9%E7%9B%AE%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3"></a>项目相关文档</h2>&#x000A;<h2>&#x000A;<a id="参考资料" class="anchor" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"></a>参考资料</h2>&#x000A;<ul>&#x000A;<li><a href="https://book.douban.com/subject/26767354/">Spring实战（第4版）</a></li>&#x000A;<li><a href="https://book.douban.com/subject/26857423/">Spring Boot实战</a></li>&#x000A;<li><a href="https://book.douban.com/subject/27025912/">Spring Cloud微服务实战</a></li>&#x000A;<li><a href="https://book.douban.com/subject/27028228/">Spring Cloud与Docker微服务架构实战</a></li>&#x000A;<li><a href="https://book.douban.com/subject/25975186/">Spring Data实战</a></li>&#x000A;<li><a href="https://book.douban.com/subject/27074809/">MyBatis从入门到精通</a></li>&#x000A;<li><a href="https://book.douban.com/subject/25817684/">深入浅出MySQL</a></li>&#x000A;<li><a href="https://book.douban.com/subject/26758194/">循序渐进Linux（第2版）</a></li>&#x000A;<li><a href="https://book.douban.com/subject/26967826/">Elasticsearch 技术解析与实战</a></li>&#x000A;<li><a href="https://book.douban.com/subject/27061123/">MongoDB实战(第二版)</a></li>&#x000A;<li><a href="https://book.douban.com/subject/26902153/">Kubernetes权威指南</a></li>&#x000A;<li><a href="https://github.com/shenzhuan/mallplus">mall商城</a></li>&#x000A;<li><a href="https://gitee.com/baomidou/mybatis-plus">mybatis-plus</a></li>&#x000A;</ul>&#x000A;<p><img src="https://images.gitee.com/uploads/images/2019/0906/140726_91409f33_134431.jpeg" alt="输入图片说明" title="在这里输入图片标题">&#x000A;<a href="https://s.click.taobao.com/sr2jc1w">购买地址</a></p>&#x000A;<p><img src="https://images.gitee.com/uploads/images/2019/0906/140754_376d516d_134431.jpeg" alt="输入图片说明" title="在这里输入图片标题">&#x000A;<a href="https://s.click.taobao.com/nyYgc1w">购买地址</a></p>&#x000A;<h2>&#x000A;<a id="许可证" class="anchor" href="#%E8%AE%B8%E5%8F%AF%E8%AF%81"></a>许可证</h2>&#x000A;<p><a href="https://github.com/zscatzheng/mall/blob/master/LICENSE">MIT</a></p>&#x000A;<p>Copyright (c) 2018-2019 zscatzheng</p></div>
+</div>
+</div>
+<script>
+  "use strict";
+  if ($('.markdown-body').children("style").length != 0) {
+    var i, array = $('.markdown-body').children("style");
+    array.first().attr('scoped','');
+    $.scoped();
+  }
+  
+  toMathMlCode('','markdown-body')
+</script>
+<style>
+  .txt-style{background:#FFF !important;padding:0 !important}
+</style>
+
+</div>
+<div class='project-donate-overview' id='project-donate-overview'>
+<div class='ui center aligned'>
+<div class='ui large orange donate button'>
+&emsp;捐赠&emsp;
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    var $btnLoad, $container, $list, $modal, $root, $tipLoading, checkLoad, href, isLoading, loadDonates, page, setDonates;
+  
+    $root = $('html, body');
+  
+    href = '#project-donate-overview';
+  
+    $('a[href="' + href + '"]').click(function() {
+      $root.animate({
+        scrollTop: $(href).offset().top
+      }, 500, function() {
+        return window.location.hash = href;
+      });
+      return false;
+    });
+  
+    page = 0;
+  
+    isLoading = false;
+  
+    $list = $('.project-donate-list');
+  
+    $modal = $('.project-donate-modal');
+  
+    $container = $('#project-donate-overview');
+  
+    $tipLoading = $container.find('.tip-loading');
+  
+    $container.find('.donate.button').on('click', function() {
+      return $modal.modal('show');
+    });
+  
+    if (0 > 0) {
+      $btnLoad = $container.find('.btn-load-more').on('click', function() {
+        return loadDonates();
+      });
+      setDonates = function(list) {
+        var $item, html, item, _i, _len, _results;
+  
+        _results = [];
+        for (_i = 0, _len = list.length; _i < _len; _i++) {
+          item = list[_i];
+          html = ['<div class="header">', item.donator_name, '<span class="ui yellow circular label money">¥', item.money, '</span></div><div class="content">', item.message, '</div>'].join('');
+          if (item.donator_avatar_url.indexOf('no_portrait.png') === 0) {
+            item.donator_avatar_url = LetterAvatar(item.donator_name);
+          }
+          $item = $(['<span class="donate-info"><img src="', item.donator_avatar_url, '" class="ui inline circular image"', 'alt="', item.donator_name, '"></span>'].join(''));
+          $list.append($item);
+          _results.push($item.popup({
+            inline: true,
+            html: html,
+            position: 'bottom center'
+          }));
+        }
+        return _results;
+      };
+      loadDonates = function() {
+        if (isLoading) {
+          return;
+        }
+        page += 1;
+        isLoading = true;
+        $btnLoad.hide();
+        $tipLoading.show();
+        return $.getJSON('/zscat/mallplus/donates.json', {
+          page: page
+        }, function(list) {
+          setDonates(list);
+          isLoading = false;
+          if (page * 12 < 0) {
+            $btnLoad.show();
+            return $tipLoading.hide();
+          } else {
+            $btnLoad.remove();
+            return $tipLoading.remove();
+          }
+        });
+      };
+      checkLoad = function() {
+        var listTop, top;
+  
+        top = $(window).scrollTop();
+        listTop = $list.offset().top;
+        if (listTop >= top && listTop < top + $(window).height()) {
+          $(window).off('scroll', checkLoad);
+          return loadDonates();
+        }
+      };
+      $(window).on('scroll', checkLoad);
+      checkLoad();
+    }
+  
+  }).call(this);
+</script>
+
+<script id='tree-item-context-menu-template' type='text/plain'>
+<div class='ui menu compact vertical tree-context'>
+<a class='btn-open-new-tab item tree-operation'>
+<i class='file outline icon'></i>
+新标签打开
+</a>
+<a class='btn-rename item tree-operation'>
+<i class='edit icon'></i>
+重命名
+</a>
+<a class='btn-delete item tree-operation'>
+<i class='trash icon'></i>
+删除
+</a>
+</div>
+</script>
+<script>
+  $(function() {
+    var $createFolderForm = $('.create-folder-form'),
+        $createFolderSubmitBtn = $('.create-folder-form .js-submit-btn')
+        $folderPath = $('#new_folder_path'),
+        $message = $('.create-folder-form .notice'),
+        folders = ["document", "mall-admin", "mall-mbg", "mall-portal"],
+        folderReg = new RegExp(/\/+/);
+  
+    var INDEX_BEGIN_WITH_READONLY_DIR = 0
+    var gitGCModal = new GiteeModalHelper({
+        approveText: "确认",
+        cancelText: "取消",
+        okText: "确认",
+    })
+    function checkFolder(folder) {
+      var i, itemArr;
+      if (folder == '') {
+        return false;
+      }
+      for (i = 0; i< folders.length; i++) {
+        itemArr = folders[i].split('/');
+        if (itemArr[0] == folder){
+          return true
+        }
+      }
+      return false;
+    }
+  
+    function createFolderShow () {
+      $createFolderForm.show();
+      $folderPath.focus();
+    }
+  
+    $('.create-folder-form .cancel').click(function () {
+      $createFolderForm.hide();
+    })
+  
+    $folderPath.on('input', function (e) {
+      if($(this).parent().hasClass('error')) {
+        $message.removeClass('warn').html("<strong>提示:</strong> 由于 Git 不支持空文件夾，创建文件夹后会生成空的 .keep 文件");
+        $(this).parent().removeClass('error');
+      }
+      $createFolderSubmitBtn.removeClass('disabled');
+    })
+  
+    $createFolderForm.submit(function (e) {
+      var value = $folderPath.val();
+      if (!folderReg.test(value) && !checkFolder(value) && value) {
+        $('#new_file_path').val(value + '/.keep');
+      } else {
+        $message.addClass('warn').html("文件夹名不为空，不含有字符（／）且不能与当前目录文件夹同名");
+        $folderPath.parent().addClass('error');
+        e.preventDefault();
+      }
+      $createFolderSubmitBtn.addClass('disabled');
+    })
+  
+    $('#create-folder').click(createFolderShow);
+    window.createFolderShow = createFolderShow;
+  
+    window.hasTreeContextMenu = false;
+    var contextMenuTemplate = $('#tree-item-context-menu-template').html();
+  
+    if ("true" == "false" || "true" == "false" || "false" == "false") {
+      return;
+    }
+  
+    function createContextMenu($item, x, y) {
+      if (hasTreeContextMenu) {
+        $('.tree-context').remove();
+        hasTreeContextMenu = false;
+        return;
+      }
+      hasTreeContextMenu = true;
+      var path = $item.parent().find('a').attr('href');
+      var $menu = $(contextMenuTemplate).appendTo('body');
+      let readonly = $item.attr('data-readonly') !== undefined
+  
+      if ($('.btn-readonly')[0]) {
+        if (readonly) {
+          $('.btn-readonly')[0].children[0].className = 'icon unlock'
+          $('.btn-readonly')[0].lastChild.data = "取消只读"
+        } else {
+          $('.btn-readonly')[0].lastChild.data = "标记为只读"
+        }
+      }
+      $menu.css({ left: x, top: y });
+      $menu.find('.btn-open-new-tab').attr({
+        href: path,
+        target: '_blank'
+      });
+      $menu.find('.btn-rename').on('click', function(event) {
+        rename($item.parent().attr('file_hex'));
+      });
+      $menu.find('.btn-delete').on('click', function(event) {
+        removeFile($item.parent().next().find('.ui.form').attr('path').replace(/\+/g, '%20'));
+      })
+      $menu.find('.btn-readonly').on('click', function(event) {
+        var obj = $item.parent().next().find('.ui.form').attr('path').replace(/\+/g, '%20')
+        let readonly = $item.attr('data-readonly') !== undefined
+        if (readonly) {
+          removeReadonlyMark(obj, $item)
+        } else {
+          addReadonlyMark(obj, $item)
+        }
+      })
+      $menu.find('.btn-readonly-is-uncharged-enterprise').popup({
+        content: "仅付费企业仓库可开启文件只读功能",
+        className: {
+          popup: 'ui popup',
+        },
+        position: 'bottom center'
+      })
+      $menu.find('.btn-readonly-is-open-svn').popup({
+        content: "仓库已开启 SVN 支持，无法标记只读文件/目录",
+        className: {
+          popup: 'ui popup',
+        },
+        position: 'bottom center'
+      })
+    }
+  
+    var editing = false
+  
+    $(document).on('click',function(event){
+      if (hasTreeContextMenu && event.button !== 2) {
+        setTimeout(function () {
+          $('.tree-context').remove();
+          hasTreeContextMenu = false;
+        }, 200);
+      }
+    })
+  
+    $('.tree-item').on('click',function(event){
+      if (hasTreeContextMenu) {
+        event.preventDefault();
+      }
+    })
+  
+    function isReadonly(path) {
+      if (!gon.readonlyItems) {
+        return false
+      } else {
+        let item_path = getItemPath(path, 'folder')
+        return isTreeItemReadonly(item_path, gon.readonlyItems)
+      }
+    }
+  
+    function isParentsReadonly(path) {
+      let self_path = path.replace(/\/$/, '')
+      let parentPathArray = self_path.split('/')
+      if (parentPathArray.length < 2) {
+        return false
+      }
+      parentPathArray.pop()
+      let parentPath = parentPathArray.join('/') + '/'
+      return isReadonly(parentPath)
+    }
+  
+    // 删除只读标记
+    function removeReadonlyMark(path, $item) {
+      var $icon = $($item.context.children[0])
+      var $parent = $item.parent('.tree-item')
+      var type = $parent.data('type')
+      var branch = $parent.data('branch')
+      var readonly_item = $item.data('path')
+      if (type !== 'file') {
+        readonly_item += "/"
+      }
+  
+      readonly_item = readonly_item.replace(/</gm, '&lt;')
+      readonly_item = readonly_item.replace(/>/gm, '&gt;')
+      var confirmString = `
+      <p>所属分支: <code class="readonly-branch">${branch}</code></p>\
+      <p>文件路径: <code class="readonly-path">${readonly_item}</code></p>\
+      <strong>确认取消分支上这个路径的只读标记？</strong>
+      `
+      gitGCModal.confirm("取消只读", confirmString, () => {
+        readonly_item = readonly_item.replace(/&lt;/gm, '<')
+        readonly_item = readonly_item.replace(/&gt;/gm, '>')
+        let parentsReadonly = isParentsReadonly(readonly_item)
+        if (parentsReadonly) {
+          return gitGCModal.alert('提示', '只读记录不存在，或父级目录为只读', () => {
+            location.reload()
+          })
+        } else {
+          $.ajax({
+            url: "/zscat/mallplus/readonly",
+            type: `DELETE`,
+            data: {
+              branch,
+              path: readonly_item,
+            },
+            success: function(res) {
+              if (res.code !== 0) {
+                gitGCModal.alert("提示", res.msg, () => {
+                  location.reload()
+                })
+              }  else {
+                $parent.removeClass('readonly-item')
+                if (gon.readonlyItems) {
+                  gon.readonlyItems.splice(gon.readonlyItems.indexOf(readonly_item), 1)
+                }
+                if (type === 'file') {
+                  $icon.removeClass('icon-file-readonly readonly-icon')
+                  $icon.addClass('icon-file')
+                } else {
+                  $icon.removeClass('icon-folder-readonly readonly-icon')
+                  $icon.addClass('icon-folders')
+                }
+                $icon.popup('destroy')
+                $item.removeAttr('data-readonly')
+              }
+            }
+          })
+        }
+      })
+    }
+  
+    // 只读过滤
+    function isTreeItemReadonly(path, readonlyItems) {
+      let item = readonlyItems.find((item) => {
+        if (item.slice(-1) === '/') {
+          return path.indexOf(item) === INDEX_BEGIN_WITH_READONLY_DIR
+        } else {
+          return path === item
+        }
+      })
+      return item !== undefined
+    }
+  
+    function getItemPath(path, path_type='file') {
+      return path_type === 'file' ? path : `${path}/`
+    }
+  
+    // 启用异步只读差异化的次数
+    let is_can_readonly = false
+    // 异步对文件树进行只读差异化显示
+    function markTree() {
+      $.ajax({
+        url: "/zscat/mallplus/readonly",
+        method: 'get',
+        data: {
+          "branch": "master"
+        },
+        success: (result) => {
+          let readonlyItems = result.readonly_items
+          gon.readonlyItems = readonlyItems
+          $(".tree-list-item").each(function(){
+            $this = $(this)
+            let path = $this.attr('data-path')
+            let type = $this.attr('data-type')
+            let item_path = getItemPath(path, type)
+            let readonly = isTreeItemReadonly(item_path, readonlyItems)
+            $icon = $this.find('i')
+            $parent = $this.parent('.tree-item')
+            if (readonly) {
+              $parent.addClass('readonly-item')
+              $this.attr('data-readonly', '')
+              $icon.attr('class', `iconfont icon-${type}-readonly readonly-icon`)
+              $icon.attr('data-readonly', '')
+              $icon.popup({
+                content: "只读",
+                className   : {
+                  popup: 'ui popup dark',
+                },
+                position: 'top center'
+              })
+            } else {
+              let className =  type === 'file' ? 'file' : 'folders'
+              $this.removeAttr('data-readonly')
+              $icon.attr('class', `iconfont icon-${className}`)
+              $icon.removeAttr('data-readonly')
+            }
+          })
+        }
+      })
+    }
+  
+    // 若已开启只读功能，对目录进行只读差异化标记
+    if (is_can_readonly) {
+      markTree()
+    }
+  
+    // 添加只读标记
+    function addReadonlyMark(path, $item) {
+      var $icon = $($item.context.children[0])
+      var $parent = $item.parent('.tree-item')
+      var type = $parent.data('type')
+      var branch = $parent.data('branch')
+      var readonly_item = $item.data('path')
+      if (type !== 'file') {
+        readonly_item += "/"
+      }
+  
+      readonly_item = readonly_item.replace(/</gm, '&lt;')
+      readonly_item = readonly_item.replace(/>/gm, '&gt;')
+      var confirmString = `
+      <p>所属分支: <code class="readonly-branch">${branch}</code></p>\
+      <p>文件路径: <code class="readonly-path">${readonly_item}</code></p>\
+      <strong>确认将分支上的这个路径标记为只读？</strong>
+      `
+      gitGCModal.confirm(`标记只读`, confirmString, () => {
+        readonly_item = readonly_item.replace(/&lt;/gm, '<')
+        readonly_item = readonly_item.replace(/&gt;/gm, '>')
+        $.ajax({
+          url: "/zscat/mallplus/readonly",
+          type: `POST`,
+          data: {
+            branch,
+            path: readonly_item,
+          },
+          success: function(res) {
+            if (res.code !== 0) {
+              gitGCModal.alert("提示", res.msg, () => {
+                location.reload()
+              })
+            } else {
+              // 之前未开启只读功能
+              if (!is_can_readonly) {
+                is_can_readonly = true
+                return markTree()
+              }
+              $parent.addClass('readonly-item')
+              var existReadonlyItems = gon.readonlyItems || []
+              existReadonlyItems.push(readonly_item)
+              gon.readonlyItems = existReadonlyItems
+              $icon.popup({
+                content: "只读",
+                className   : {
+                  popup: 'ui popup dark',
+                },
+                position: 'top center'
+              })
+              if (type === 'file') {
+                $icon.removeClass('icon-file')
+                $icon.addClass('icon-file-readonly readonly-icon')
+              } else {
+                $icon.removeClass('icon-folders')
+                $icon.addClass('icon-folder-readonly readonly-icon')
+              }
+              $item.attr('data-readonly', '')
+            }
+          }
+        })
+      })
+    }
+  
+    function removeFile(path) {
+      gitGCModal.confirm("删除", "确定要删除吗？", () => {
+        $.ajax({
+          type: "DELETE",
+          dataType: "JSON",
+          url: "/zscat/mallplus/delete/" + path,
+          success: function(res) {
+            if (res.status != 1) {
+              var alert_message = res.message || "删除失败"
+              return gitGCModal.alert("提示", alert_message)
+            }
+            if ($('.tree-item-file-name').length == 2) {
+              window.location.href = '/' + gon.user_project;
+            } else {
+              window.location.href = window.location.pathname;
+            }
+          }
+        });
+      })
+    }
+  
+    function rename(file_hex) {
+      $(".row.tree-item").show();
+      $(".tree-item-rename").hide();
+  
+      if($("."+file_hex).is(':hidden') == true) return;
+  
+      $("."+file_hex).hide();
+      var _t = $(".rename-"+file_hex);
+      src = _t.attr('src_text')
+      if(src==undefined){
+         newName = _t.find("[name='new_filename']").val()
+        _t.attr('src_text',newName)
+      }else{
+        _t.find("[name='new_filename']").val(_t.attr('src_text'))
+      }
+      $(".rename-"+file_hex).css("display","");
+    }
+  
+    setTimeout(function(){
+      $(".popup-save").click(function(){
+        form = $(this).parents(".ui.form")
+        file_hex = $(this).parents(".row.tree-item").attr("file_hex");
+        new_filename = $.trim(form.find("[name='new_filename']").val())
+        overwrite = false
+        $('.tree-item-file-name').find('a').each(function(a){
+          title = $(this).attr('title');
+          if(title != undefined){
+            if (title.split('/')[0].toLowerCase() == new_filename.toLowerCase()){
+              overwrite = true;
+            }
+          }
+        });
+        if(overwrite){
+          form.find("[name='new_filename']").focus();
+          gitGCModal.alert("提示", "存在相同的文件名,请修改后重试")
+          return;
+        }
+        $.ajax({
+          type: 'POST',
+          url: "/zscat/mallplus/rename/"+ form.attr('path').replace(/\+/g, '%20'),
+          data:
+          {
+            new_filename: new_filename
+          },
+          success: function(o){
+            if(o.status == 1){
+              href = window.location.href.split('?')[0]
+              window.location.href = href;
+            }else {
+              var alert_message = o.message || "重命名失败"
+              gitGCModal.alert("提示", alert_message)
+            }
+          },
+          dataType: "json"
+        });
+      })
+  
+      $(".popup-close").click(function(){
+        $(".row.tree-item").show();
+        $(".tree-item-rename").hide();
+      })
+      $('.tree-item-file-name').each(function(){
+        var $this = $(this);
+        if (typeof $this.parent().attr('file_hex') === 'undefined') {
+          return;
+        }
+        $this.contextmenu(function(event) {
+          event.preventDefault();
+          createContextMenu($this, event.pageX, event.pageY);
+        })
+      })
+    },1000)
+  })
+</script>
+<style>
+  .readonly-item {
+    background-color: #FBFBFB !important;
+  }
+  .readonly-path,.readonly-branch {
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.8;
+  }
+  .btn-readonly-is-uncharged-enterprise, .btn-readonly-is-open-svn {
+    background-color: #f5f5f5 !important;
+    color: #757575 !important;
+  }
+</style>
+
+<div class='row column inner-comment' id='blob-comment'>
+<input id="comment_path" name="comment_path" type="hidden" value="" />
+<div class='tree-comments'>
+<h3 id='tree_comm_title'>
+点评
+(
+<span class='comments-count'>
+7
+</span>
+)
+</h3>
+<div class='ui threaded comments middle aligned' id='notes-list'></div>
+<input id="ajax_add_note_id" name="ajax_add_note_id" type="hidden" />
+<div class='text-center'>
+<div class='tip-loading' style='display: none'>
+<div class='ui active mini inline loader'></div>
+正在加载...
+</div>
+</div>
+</div>
+<script>
+  "use strict";
+  $(function(){
+    var page = 1
+    var commentsCount = 7
+    var $container = $('.tree-comments')
+    var $comments = $container.find('.ui.comments')
+    var $tipLoading = $container.find('.tip-loading')
+    var $btnLoad = $container.find('.btn-load-more')
+    var noteAnchor = new Gitee.NoteAnchor({ defaultAnchor: '#tree_comm_title' })
+  
+    if (commentsCount < 1) {
+      return;
+    }
+  
+    var path;
+    if ($('#comment_path').val() === '') {
+      path = '/';
+    } else {
+      path = $('#comment_path').val();
+    }
+  
+    function loadComments () {
+      $btnLoad.hide();
+      $tipLoading.show();
+      $.ajax({
+        url: '/zscat/mallplus/comment_list',
+        data: {
+          page: page,
+          path: path
+        },
+        success: function(data) {
+          var err;
+          try {
+            $tipLoading.hide();
+            $btnLoad.show();
+            if (data.status !== 0) {
+              $btnLoad.text('无更多评论')
+              return $btnLoad.prop('disabled', true).addClass('disabled');
+            } else {
+              TreeComment.CommentListHandler(data);
+              page += 1;
+              if (data.comments_count < 10) {
+                $('#ajax_add_note_id').val('');
+                $btnLoad.text('无更多评论')
+                $btnLoad.prop('disabled', true).addClass('disabled');
+              }
+              // osctree can not load script
+              $comments.find('.timeago').timeago();
+              $comments.find('.commenter-role-label').popup();
+              noteAnchor.locate();
+              toMathMlCode('', 'comments');
+              return $('.markdown-body pre code').each(function(i, block) {
+                return hljs.highlightBlock(block);
+              });
+            }
+          } catch (error) {
+            err = error;
+            return console.log('loadComments error:' + err);
+          }
+        }
+      });
+    };
+  
+  
+    function checkLoad () {
+      var listTop, top;
+      top = $(window).scrollTop();
+      listTop = $container.offset().top;
+      if (listTop >= top && listTop < top + $(window).height()) {
+        $(window).off('scroll', checkLoad);
+        return loadComments();
+      }
+    };
+  
+    $btnLoad.on('click', loadComments);
+    loadComments()
+  })
+</script>
+
+</div>
+<div class='inner-comment-box' id='comment-box'>
+<p>
+你可以在<a href="/login">登录</a>后，发表评论
+</p>
+
+</div>
+
+<div class='complaint'>
+<div class='ui modal small form' id='landing-comments-complaint-modal'>
+<i class='iconfont icon-close close'></i>
+<div class='header'>
+举报
+</div>
+<div class='content'>
+<div class='appeal-success-tip hide'>
+<i class='iconfont icon-ic_msg_success'></i>
+<div class='appeal-success-text'>
+举报成功
+</div>
+<span>
+我们将于2个工作日内通过站内信反馈结果给你！
+</span>
+</div>
+<div class='appeal-tip'>
+请认真填写举报原因，尽可能描述详细。
+</div>
+<div class='ui form appeal-form'>
+<div class='inline field'>
+<label class='left-part appeal-type-wrap'>
+举报类型
+</label>
+<div class='ui dropdown selection' id='appeal-comments-types'>
+<div class='text default'>
+请选择举报类型
+</div>
+<i class='dropdown icon'></i>
+<div class='menu'></div>
+</div>
+</div>
+<div class='inline field'>
+<label class='left-part'>
+举报原因
+</label>
+<textarea class='appeal-reason' id='appeal-comment-reason' name='msg' placeholder='请说明举报原因' rows='3'></textarea>
+</div>
+<div class='ui message callback-msg hide'></div>
+<div class='ui small error text message exceeded-size-tip'></div>
+</div>
+</div>
+<div class='actions'>
+<div class='ui button blank cancel'>
+取消
+</div>
+<div class='ui orange icon button disabled ok' id='complaint-comment-confirm'>
+发送
+</div>
+</div>
+</div>
+<script>
+  var $complaintCommentsModal = $('#landing-comments-complaint-modal'),
+      $complainCommentType = $complaintCommentsModal.find('#appeal-comments-types'),
+      $complaintModalTip = $complaintCommentsModal.find('.callback-msg'),
+      $complaintCommentsContent = $complaintCommentsModal.find('.appeal-reason'),
+      $complaintCommentBtn = $complaintCommentsModal.find('#complaint-comment-confirm'),
+      complaintSending = false,
+      initedCommentsType = false;
+  
+  function initCommentsTypeList() {
+    if (!initedCommentsType) {
+      $.ajax({
+        url: "/appeals/fetch_types",
+        method: 'get',
+        data: {'type': 'comment'},
+        success: function (data) {
+          var result = '';
+          for (var i = 0; i < data.length; i++) {
+            result = result + "<div class='item' data-value='" + data[i].id + "'>" + data[i].name + "</div>";
+          }
+          $complainCommentType.find('.menu').html(result);
+        }
+      });
+      $complainCommentType.dropdown({showOnFocus: false});
+      initedCommentsType = true;
+    }
+  }
+  $complainCommentType.on('click', function() {
+    $complaintCommentsModal.modal({
+      autofocus: false,
+      onApprove: function() {
+        return false;
+      },
+      onHidden: function() {
+        restoreCommonentDefault();
+      }
+    }).modal('show');
+  });
+  
+  $complaintCommentsContent.on('change keyup', function(e) {
+    var content = $(this).val();
+    if ($.trim(content).length > 0 && $complainCommentType.dropdown('get value').length > 0 ) {
+      $complaintCommentBtn.removeClass('disabled');
+      return;
+    }
+    $complaintCommentBtn.addClass('disabled');
+  });
+  
+  
+  $complainCommentType.dropdown({
+    showOnFocus: false,
+    onChange: function(value, text, $selectedItem) {
+      if (value.length > 0 && $.trim($complaintCommentsContent.val()).length > 0) {
+        $complaintCommentBtn.removeClass('disabled');
+        return
+      }
+      $complaintCommentBtn.addClass('disabled');
+    }
+  });
+  
+  function restoreCommonentDefault() {
+    $complainCommentType.dropdown('restore defaults');
+    $complaintCommentsContent.val('');
+    $('.exceeded-size-tip').text('').hide();
+    $complaintModalTip.text('').hide();
+    setTimeout(function() {
+      setCommentSendTip(false);
+    }, 1500);
+  }
+  
+  $complaintCommentBtn.on('click',function(e){
+    var reason = $complaintCommentsContent.val();
+    var appealableId = $('#landing-comments-complaint-modal').attr('data-id');
+    if (complaintSending) {
+      return;
+    }
+    var appealType = $complainCommentType.dropdown('get value');
+    var formData = new FormData();
+    formData.append('appeal_type_id', appealType);
+    formData.append('reason', reason);
+    formData.append('appeal_type','Note');
+    formData.append('target_id',appealableId);
+    $.ajax({
+      type: 'POST',
+      url: "/appeals",
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      beforeSend: function() {
+        setCommentSendStatus(true);
+      },
+      success: function(res) {
+        if (res.status == 200) {
+          setCommentSendTip(true);
+          setTimeout(function() {
+            $complaintCommentsModal.modal('hide');
+            restoreCommonentDefault();
+          }, 3000);
+        }
+        setCommentSendStatus(false);
+      },
+      error: function(err) {
+        showCommonTips(err.responseJSON.message, 'error');
+        setCommentSendStatus(false);
+      }
+    })
+  });
+  
+  function showCommonTips(text, type) {
+    $complaintModalTip.text(text).show();
+    if (type == 'error') {
+      $complaintModalTip.removeClass('success').addClass('error');
+    } else {
+      $complaintModalTip.removeClass('error').addClass('success');
+    }
+  }
+  
+  function setCommentSendStatus(value) {
+    complaintSending = value;
+    if (complaintSending) {
+      $complaintCommentBtn.addClass('loading');
+      $complaintCommentsContent.attr('readonly', true);
+      $complainCommentType.attr('readonly', true);
+    } else {
+      $complaintCommentBtn.removeClass('loading');
+      $complaintCommentsContent.attr('readonly', false);
+      $complainCommentType.attr('readonly', false);
+    }
+  }
+  
+  function setCommentSendTip(value) {
+    if (value) {
+      $('.appeal-success-tip').removeClass('hide');
+      $('.appeal-tip').addClass('hide');
+      $('.appeal-form').addClass('hide');
+      $('#landing-comments-complaint-modal .actions').addClass('hide');
+    } else {
+      $('.appeal-success-tip').addClass('hide');
+      $('.appeal-tip').removeClass('hide');
+      $('.appeal-form').removeClass('hide');
+      $('#landing-comments-complaint-modal .actions').removeClass('hide');
+    }
+  }
+</script>
+
+</div>
+<script>
+  "use strict";
+  $('.js-check-star').checkbox('set unchecked')
+</script>
+
+</div>
+<script>
+  (function() {
+    $(function() {
+      Tree.init();
+      return TreeCommentActions.init();
+    });
+  
+  }).call(this);
+</script>
+</div>
+</div>
+<style>
+  .team-member-checkbox .ui.radio.checkbox.checked label:after{top:7px !important}
+</style>
+
+</div>
+</div>
+<div class='gitee-project-extension'>
+<div class='extension lang'>
+Java
+</div>
+<div class='extension public'>
+1
+</div>
+<div class='extension https'>
+https://gitee.com/zscat/mallplus.git
+</div>
+<div class='extension ssh'>
+git@gitee.com:zscat/mallplus.git
+</div>
+</div>
+
+<script>
+  (function() {
+    var donateModal;
+  
+    Gitee.modalHelper = new GiteeModalHelper({
+      alertText: '提示',
+      okText: '确定'
+    });
+  
+    donateModal = new ProjectDonateModal({
+      el: '#project-donate-modal',
+      alipayUrl: '/zscat/mallplus/alipay',
+      wepayUrl: '/zscat/mallplus/wepay',
+      nameIsBlank: '名称不能为空',
+      nameTooLong: '名称过长（最多为 36 个字符）',
+      modalHelper: Gitee.modalHelper
+    });
+  
+    if ("" === 'true') {
+      donateModal.show();
+    }
+  
+    $('#project-donate').on('click', function() {
+      return donateModal.show();
+    });
+  
+  }).call(this);
+</script>
+<script>
+  Tree.initHighlightTheme('white')
+</script>
+
+<script>
+  $(function() {
+    GitLab.GfmAutoComplete.dataSource = "/zscat/mallplus/autocomplete_sources"
+    GitLab.GfmAutoComplete.Emoji.assetBase = 'https://assets.gitee.com/assets/emoji'
+    GitLab.GfmAutoComplete.setup();
+  });
+</script>
+
+<footer id='git-footer-main'>
+<div class='ui container'>
+<div class='ui two column grid'>
+<div class='column git-footer-left'>
+<p><a href="https://gitee.com/" target="_blank">© Gitee.com</a></p>
+<div class='ui four column grid' id='footer-left'>
+<div class='column'>
+<div class='ui link list'>
+<div class='item'>
+<a href="/about_us" class="item">关于我们</a>
+</div>
+<div class='item'>
+<a href="/terms" class="item">使用条款</a>
+</div>
+<div class='item'>
+<a href="/oschina/git-osc/issues" class="item">意见建议</a>
+</div>
+<div class='item'>
+<a href="/links.html" class="item">合作伙伴</a>
+</div>
+</div>
+</div>
+<div class='column'>
+<div class='ui link list'>
+<div class='item'>
+<a href="/all-about-git" class="item">Git 大全</a>
+</div>
+<div class='item'>
+<a href="https://oschina.gitee.io/learn-git-branching/" class="item">Git 命令学习</a>
+</div>
+<div class='item'>
+<a href="https://copycat.gitee.com/" class="item">代码克隆检测</a>
+</div>
+<div class='item'>
+<a href="/appclient" class="item">APP与插件下载</a>
+</div>
+</div>
+</div>
+<div class='column'>
+<div class='ui link list'>
+<div class='item'>
+<a href="/gists" class="item">代码片段</a>
+</div>
+<div class='item'>
+<a href="/gitee-stars" class="item">码云封面人物</a>
+</div>
+<div class='item'>
+<a href="/gvp" class="item">GVP项目</a>
+</div>
+<div class='item'>
+<a href="https://blog.gitee.com/" class="item">码云博客</a>
+</div>
+</div>
+</div>
+<div class='column'>
+<div class='ui link list'>
+<div class='item'>
+<a href="/api/v5/swagger" class="item">OpenAPI</a>
+</div>
+<div class='item'>
+<a href="/help" class="item">帮助文档</a>
+</div>
+<div class='item'>
+<a href="/self_services" class="item">在线自助服务</a>
+</div>
+<div class='item'>
+<a href="/git-osc" class="item">更新日志</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='column right aligned followus git-footer-right'>
+<div class='qrcode weixin'>
+<img alt="Qrcode-weixin" src="https://assets.gitee.com/assets/qrcode-weixin-8ab7378f5545710bdb3ad5c9d17fedfe.jpg" />
+<p class='weixin-text'>微信服务号</p>
+</div>
+<div class='phone-and-qq column'>
+<div class='ui list official-support-container'>
+<div class='item'>
+<a href="//shang.qq.com/wpa/qunwpa?idkey=0d6c2fc0b5b71ac33405dd575bb490bf1a50e3c9a9f694e8a689cb59ee7dacc3" class="icon-popup" title="点击加入码云官方群"><i class='iconfont icon-logo-qq'></i>
+<span>官方技术交流QQ群：515965326</span>
+</a></div>
+<div class='item mail-and-zhihu'>
+<a href="mailto: git@oschina.cn"><i class='iconfont icon-ic-mail'></i>
+<span id='git-footer-email'>git@oschina.cn</span>
+</a><a href="https://www.zhihu.com/org/ma-yun-osc/ " target="_blank"><i class='iconfont icon-zhihu'></i>
+<span>码云Gitee</span>
+</a></div>
+<div class='item'>企业版售前及售后使用咨询：400-606-0201</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='bottombar'>
+<div class='ui container'>
+<div class='ui grid'>
+<div class='five wide column partner'>
+本站带宽由 <a href="https://www.anchnet.com/" target="_blank" title="anchnet"><img alt="51idc" src="/51idc.png" /></a> 提供
+</div>
+<div class='eleven wide column right aligned'>
+<div class='copyright'>
+<a href="http://www.beian.miit.gov.cn/">粤ICP备12009483号</a>
+开源中国出品
+</div>
+<i class='icon world'></i>
+<a href="/language/zh-CN">简 体</a>
+/
+<a href="/language/zh-TW">繁 體</a>
+/
+<a href="/language/en">English</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+  var officialEmail = $('#git-footer-email').text()
+  $('#git-footer-main .icon-popup').popup({ position: 'bottom center' })
+  $('#git-footer-email').text(officialEmail.replace('#', '@'))
+</script>
+
+
+<div class='side-toolbar'>
+<div class='button toolbar-help'>
+<i class='iconfont icon-help'></i>
+</div>
+<div class='ui popup left center dark'>点此查找更多帮助</div>
+<div class='toolbar-help-dialog'>
+<div class='toolbar-dialog-header'>
+<h3 class='toolbar-dialog-title'>搜索帮助</h3>
+<form accept-charset="UTF-8" action="/help/load_keywords_data" class="toolbar-help-search-form" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+<div class='ui icon input fluid toolbar-help-search'>
+<input name='keywords' placeholder='请输入产品名称或问题' type='text'>
+<i class='icon search'></i>
+</div>
+</form>
+
+<i class='iconfont icon-close toolbar-dialog-close-icon'></i>
+</div>
+<div class='toolbar-dialog-content'>
+<div class='toolbar-help-hot-search'>
+<div class='toolbar-roll'>
+<a href="https://oschina.gitee.io/learn-git-branching/?utm_source==gitee-help-widget" class="init active" title="Git 命令在线学习"><i class='Blue icon icon-command iconfont'></i>
+<span>Git 命令在线学习</span>
+</a><a href="https://gitee.com/help/articles/4261?utm_source==gitee-help-widget" class="init " title="如何在码云上导入 GitHub 仓库"><i class='icon icon-clipboard iconfont orange'></i>
+<span>如何在码云上导入 GitHub 仓库</span>
+</a></div>
+<div class='toolbar-list'>
+<div class='toolbar-list-item'>
+<a href="/help/articles/4114">Git 仓库基础操作</a>
+</div>
+<div class='toolbar-list-item'>
+<a href="/help/articles/4166">企业版和个人版功能对比</a>
+</div>
+<div class='toolbar-list-item'>
+<a href="/help/articles/4191">SSH 公钥设置</a>
+</div>
+<div class='toolbar-list-item'>
+<a href="/help/articles/4194">如何处理代码冲突</a>
+</div>
+<div class='toolbar-list-item'>
+<a href="/help/articles/4232">仓库体积过大，如何减小？</a>
+</div>
+</div>
+</div>
+<div class='toolbar-help-search-reseult'>
+<div class='toolbar-help-flex-column'>
+<div class='ui centered inline loader toolbar-help-loader'></div>
+<div class='toolbar-list'></div>
+<div class='toolbar-help-link-to-help'>
+<a href="" target="_blank">查看更多搜索结果</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  var opt = { position: 'left center' };
+  var $helpSideToolbar = $(".button.toolbar-help");
+  var $toolbarRoll = $('.toolbar-roll');
+  
+  $(function() {
+    if (false) {
+      $helpSideToolbar.popup(opt);
+    } else {
+      $helpSideToolbar.popup('show', opt);
+      setTimeout(function() {
+        $helpSideToolbar.popup('hide', opt);
+      }, 3000);
+    }
+  
+    if ($toolbarRoll.length) {
+      setInterval(function() {
+        var $nextActiveLink = $toolbarRoll.find('a.active').next();
+        if (!$nextActiveLink.length) {
+          $nextActiveLink = $toolbarRoll.find('a:first-child');
+        }
+        $nextActiveLink.attr('class', 'active').siblings().removeClass('active init');
+      }, 5000);
+    }
+  })
+</script>
+
+<div class='button share-link'>
+<i class='iconfont icon-share'></i>
+</div>
+<div class='ui popup dark'>
+<div class='header'>
+分享到
+</div>
+<div class='bdsharebuttonbox' style='display: flex'>
+<a class='iconfont icon-home-service-wechat' data-cmd='weixin' title='分享到微信'></a>
+<a class='iconfont icon-weibo' data-cmd='tsina' title='分享到新浪微博'></a>
+<a class='iconfont icon-qq' data-cmd='sqq' title='分享到QQ好友'></a>
+<a class='iconfont icon-qzone' data-cmd='qzone' title='分享到QQ空间'></a>
+</div>
+</div>
+<div class='popup button' id='home-comment'>
+<i class='iconfont icon-comment'></i>
+</div>
+<div class='ui popup dark'>评论</div>
+<div class='toolbar-appeal popup button'>
+<i class='iconfont icon-report'></i>
+</div>
+<div class='ui popup dark'>
+仓库举报
+</div>
+<script>
+  $('.toolbar-appeal').popup({ position: 'left center' });
+</script>
+
+<div class='button gotop popup' id='gotop'>
+<i class='iconfont icon-top'></i>
+</div>
+<div class='ui popup dark'>回到顶部</div>
+</div>
+<div class='form modal normal-modal tiny ui' id='unlanding-complaint-modal'>
+<i class='iconfont icon-close close'></i>
+<div class='header'>
+登录提示
+</div>
+<div class='container actions'>
+<div class='content'>
+该操作需登录码云帐号，请先登录后再操作。
+</div>
+<div class='ui orange icon large button ok'>
+立即登录
+</div>
+<div class='ui button blank cancel'>
+没有账号，去注册
+</div>
+</div>
+</div>
+<script>
+  var $elm = $('.toolbar-appeal');
+  
+  $elm.on('click', function() {
+    var modals = $("#unlanding-complaint-modal.normal-modal");
+    if (modals.length > 1) {
+      modals.eq(0).modal('show');
+    } else {
+      modals.modal('show');
+    }
+  })
+  $("#unlanding-complaint-modal.normal-modal").modal({
+    onDeny: function() {
+      window.location.href = "/signup?from=";
+    },
+    onApprove: function() {
+      window.location.href = "/login?from=";
+    }
+  })
+</script>
+
+<style>
+  .side-toolbar .bdsharebuttonbox a {
+    font-size: 24px;
+    color: white !important;
+    opacity: 0.9;
+    margin: 6px 6px 0px 6px;
+    background-image: none;
+    text-indent: 0;
+    height: auto;
+    width: auto;
+  }
+</style>
+<script>
+  (function() {
+    $('#project-user-message').popup({
+      position: 'left center'
+    });
+  
+  }).call(this);
+</script>
+<script>
+  Gitee.initSideToolbar({
+    hasComment: true,
+    commentUrl: '/zscat/mallplus#tree_comm_title'
+  })
+</script>
+<script>
+  window._bd_share_config = {
+    "common": {
+      "bdSnsKey": {},
+      "bdText": document.title,
+      "bdMini": "1",
+      "bdMiniList": ["bdxc","tqf","douban","bdhome","sqq","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","fbook","twi","linkedin","h163","evernotecn","copy","print"],
+      "bdPic": "",
+      "bdStyle": "1",
+      "bdSize": "32"
+    },
+    "share": {}
+  }
+</script>
+<script src="/bd_share/static/api/js/share.js" type="text/javascript"></script>
+
+
+
+
+<script>
+  (function() {
+    this.__gac = {
+      domain: 'www.oschina.net'
+    };
+  
+  }).call(this);
+</script>
+<script defer src='//www.oschina.net/public/javascripts/cjl/ga.js?t=20160926' type='text/javascript'></script>
+
+</body>
+</html>
