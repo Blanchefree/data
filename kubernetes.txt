@@ -73,53 +73,303 @@ KUBELET_EXTRA_ARGS=--fail-swap-on=false
 [root@master1 ~]# echo 1 > /proc/sys/net/ipv4/ip_forward
 
 
- [root@master ~]# vim /usr/lib/systemd/system/docker.service
 
-Environment="HTTPS_PROXY=http://www.ik8s.io:10080" 
+Kubernetes还包括以下几个核心组件：
 
-Environment="NO_PROXY=127.0.0.0/8,10.0.0.0/16"
+etcd   保存了整个集群状态
+apiserver   提供了资源操作的唯一入口，并提供认证、授权、访问控制、API注册和服务发现等机制
+controller manager   负责维护集群的状态，比如故障检测、自动扩容、滚动更新等
+scheduler  负责资源的调度，按照预定的调度策略将Pod调度到相应的机器上
+Kubelet  负责维护容器的生命周期，同时也负责Volume（CVI）和网络（CNI）的管理
+Container runtime  负责镜像管理以及Pod和容器的真正运行（CRI）
+Kube-proxy  负责为service提供cluster内部的服务发现和负载均衡
 
-[root@master1 ~]# systemctl daemon-reload
-[root@master1 ~]# systemctl start docker
+除了核心组件，还有一些推荐的Add-ons：
 
-[root@master1 ~]# docker info
+kube-dns  负责为整个集群提供DNS服务
+Ingress Controller  为服务提供外网入口
+Heapster  提供资源监控
+Dashboard  提供GUI
+Federation  提供跨可用区的集群
+Fluentd-elasticsearch  提供集群日志采集、存储与查询
 
-......
+=============================================================================================================================================
+[root@master ~]#yum install -y kubeadm 
+[root@master ~]# systemctl enable kubelet
+Created symlink from /etc/systemd/system/multi-user.target.wants/kubelet.service to /usr/lib/systemd/system/kubelet.service.
+[root@master ~]# systemctl start kubelet
+[root@master ~]# systemctl status kubelet
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; vendor preset: disabled)
+  Drop-In: /usr/lib/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+   Active: activating (auto-restart) (Result: exit-code) since 四 2019-11-07 10:16:43 CST; 5s ago
+     Docs: https://kubernetes.io/docs/
+  Process: 19927 ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS (code=exited, status=255)
+ Main PID: 19927 (code=exited, status=255)
 
-HTTPS Proxy: http://www.ik8s.io:10080
-
-No Proxy: 127.0.0.0/8,10.0.0.0/16
-
- 在后边测试时候会报以下错误
-
-[ERROR ImagePull]: failed to pull image k8s.gcr.io/kube-scheduler:v1.12.0: output: Error response from daemon: Get https://k8s.gcr.io/v2/: proxyconnect tcp: dial tcp 172.96.236.117:10080: connect: connection refused  
-
-
-（2）由于不能访问谷歌镜像仓库（www.ik8s.io），故从我的阿里云仓库下载
-
-推荐中转地址docker.io/mirrorgooglecontainers（有许多版本），但是唯独没有coredns，coredns需要从coredns/coredns:版本号 获取（这里就不再演示）
-
-
-# 拼接命令pull镜像
-[root@master1 ~]# kubeadm config images list |sed -e 's/^/docker pull /g' -e 's#k8s.gcr.io#registry.cn-hangzhou.aliyuncs.com/rsq_kubeadm#g' | sh -x
-
-# 打标签
-[root@master1 ~]# docker images |grep rsq_kubeadm |awk '{print "docker tag",$1":"$2,$1":"$2}' |sed -e 's#registry.cn-hangzhou.aliyuncs.com/rsq_kubeadm#k8s.gcr.io#2' |sh -x
-
-# 删除旧镜像
-[root@master1 ~]# docker images |grep rsq_kubeadm |awk '{print "docker rmi -f", $1":"$2}' |sh -x
-
-# 关闭Swap选项
-[root@master1 ~]# vim /etc/sysconfig/kubelet 
-KUBELET_EXTRA_ARGS="--fail-swap-on=false"
+11月 07 10:16:43 master systemd[1]: kubelet.service: main process exited, code=exited, ...n/a
+11月 07 10:16:43 master systemd[1]: Unit kubelet.service entered failed state.
+11月 07 10:16:43 master systemd[1]: kubelet.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@master ~]# systemctl stop kubelet
 
 
-kubeadm初始化： 加上--token-ttl=0使得token永不过期，即此token可永久使用
-[root@master1 ~]# kubeadm init --kubernetes-version=v1.13.0 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12 --token-ttl=0 --ignore-preflight-errors=Swap
-[init] Using Kubernetes version: v1.13.0
+[root@master ~]# yum install -y docker-ce 3:19.03.3-3.el7
+已加载插件：fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirrors.cn99.com
+ * extras: mirrors.163.com
+ * updates: mirrors.cn99.com
+没有可用软件包 3:19.03.3-3.el7。
+正在解决依赖关系
+There are unfinished transactions remaining. You might consider running yum-complete-transaction, or "yum-complete-transaction --cleanup-only" and "yum history redo last", first to finish them. If those don't work you'll have to try removing/installing packages by hand (maybe package-cleanup can help).
+--> 正在检查事务
+---> 软件包 docker-ce.x86_64.3.19.03.4-3.el7 将被 安装
+--> 正在处理依赖关系 container-selinux >= 2:2.74，它被软件包 3:docker-ce-19.03.4-3.el7.x86_64 需要
+--> 正在处理依赖关系 containerd.io >= 1.2.2-3，它被软件包 3:docker-ce-19.03.4-3.el7.x86_64 需要
+--> 正在处理依赖关系 docker-ce-cli，它被软件包 3:docker-ce-19.03.4-3.el7.x86_64 需要
+--> 正在检查事务
+---> 软件包 container-selinux.noarch.2.2.107-3.el7 将被 安装
+---> 软件包 containerd.io.x86_64.0.1.2.10-3.2.el7 将被 安装
+---> 软件包 docker-ce-cli.x86_64.1.19.03.4-3.el7 将被 安装
+--> 解决依赖关系完成
+
+依赖关系解决
+
+==============================================================================================
+ Package                  架构          版本                    源                       大小
+==============================================================================================
+正在安装:
+ docker-ce                x86_64        3:19.03.4-3.el7         docker-ce-stable         24 M
+为依赖而安装:
+ container-selinux        noarch        2:2.107-3.el7           extras                   39 k
+ containerd.io            x86_64        1.2.10-3.2.el7          docker-ce-stable         23 M
+ docker-ce-cli            x86_64        1:19.03.4-3.el7         docker-ce-stable         39 M
+
+事务概要
+==============================================================================================
+安装  1 软件包 (+3 依赖软件包)
+
+总下载量：87 M
+安装大小：362 M
+Downloading packages:
+(1/4): container-selinux-2.107-3.el7.noarch.rpm                        |  39 kB  00:00:00     
+warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-ce-19.03.4-3.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
+docker-ce-19.03.4-3.el7.x86_64.rpm 的公钥尚未安装
+(2/4): docker-ce-19.03.4-3.el7.x86_64.rpm                              |  24 MB  00:00:16     
+(3/4): containerd.io-1.2.10-3.2.el7.x86_64.rpm                         |  23 MB  00:00:27     
+(4/4): docker-ce-cli-19.03.4-3.el7.x86_64.rpm                          |  39 MB  00:00:23     
+----------------------------------------------------------------------------------------------
+总计                                                          2.2 MB/s |  87 MB  00:00:39     
+从 https://mirrors.aliyun.com/docker-ce/linux/centos/gpg 检索密钥
+导入 GPG key 0x621E9F35:
+ 用户ID     : "Docker Release (CE rpm) <docker@docker.com>"
+ 指纹       : 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
+ 来自       : https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  正在安装    : 2:container-selinux-2.107-3.el7.noarch                                    1/4 
+setsebool:  SELinux is disabled.
+  正在安装    : containerd.io-1.2.10-3.2.el7.x86_64                                       2/4 
+  正在安装    : 1:docker-ce-cli-19.03.4-3.el7.x86_64                                      3/4 
+  正在安装    : 3:docker-ce-19.03.4-3.el7.x86_64                                          4/4 
+  验证中      : 1:docker-ce-cli-19.03.4-3.el7.x86_64                                      1/4 
+  验证中      : 3:docker-ce-19.03.4-3.el7.x86_64                                          2/4 
+  验证中      : containerd.io-1.2.10-3.2.el7.x86_64                                       3/4 
+  验证中      : 2:container-selinux-2.107-3.el7.noarch                                    4/4 
+
+已安装:
+  docker-ce.x86_64 3:19.03.4-3.el7                                                            
+
+作为依赖被安装:
+  container-selinux.noarch 2:2.107-3.el7         containerd.io.x86_64 0:1.2.10-3.2.el7        
+  docker-ce-cli.x86_64 1:19.03.4-3.el7          
+
+完毕！
+
+[root@master ~]# systemctl enable docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+[root@master ~]# systemctl start docker
+[root@master ~]# docker version
+Client: Docker Engine - Community
+ Version:           19.03.4
+ API version:       1.40
+ Go version:        go1.12.10
+ Git commit:        9013bf583a
+ Built:             Fri Oct 18 15:52:22 2019
+ OS/Arch:           linux/amd64
+ Experimental:      false
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          19.03.4
+  API version:      1.40 (minimum version 1.12)
+  Go version:       go1.12.10
+  Git commit:       9013bf583a
+  Built:            Fri Oct 18 15:50:54 2019
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.2.10
+  GitCommit:        b34a5c8af56e510852c35414db4c1f4fa6172339
+ runc:
+  Version:          1.0.0-rc8+dev
+  GitCommit:        3e425f80a8c931f88e6d94a8c831b9d5aa481657
+ docker-init:
+  Version:          0.18.0
+  GitCommit:        fec3683
+[root@master ~]# docker info
+Client:
+ Debug Mode: false
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 0
+ Server Version: 19.03.4
+ Storage Driver: overlay2
+  Backing Filesystem: xfs
+  Supports d_type: true
+  Native Overlay Diff: true
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: b34a5c8af56e510852c35414db4c1f4fa6172339
+ runc version: 3e425f80a8c931f88e6d94a8c831b9d5aa481657
+ init version: fec3683
+ Security Options:
+  seccomp
+   Profile: default
+ Kernel Version: 3.10.0-957.el7.x86_64
+ Operating System: CentOS Linux 7 (Core)
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 1.777GiB
+ Name: master
+ ID: DCCV:LTBX:GHL2:BXU5:PNJJ:HQLK:CJQY:7HMG:ZDIQ:Z64R:YEBS:BEA7
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Labels:
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+[root@master ~]# vim /etc/docker/daemon.json
+[root@master ~]# systemctl daemon-reload
+[root@master ~]# systemctl restart docker
+[root@master ~]# echo -e "{\n\
+> \"registry-mirrors\": [\"https://2mrc6wis.mirror.aliyuncs.com\"],\n\
+> \"exec-opts\": [\"native.cgroupdriver=systemd\"]\n\
+> }" >> /etc/docker/daemon.json
+[root@master ~]# vim /etc/docker/daemon.json
+[root@master ~]# systemctl daemon-reload
+[root@master ~]# systemctl restart docker
+[root@master ~]# docker info
+Client:
+ Debug Mode: false
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 0
+ Server Version: 19.03.4
+ Storage Driver: overlay2
+  Backing Filesystem: xfs
+  Supports d_type: true
+  Native Overlay Diff: true
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: b34a5c8af56e510852c35414db4c1f4fa6172339
+ runc version: 3e425f80a8c931f88e6d94a8c831b9d5aa481657
+ init version: fec3683
+ Security Options:
+  seccomp
+   Profile: default
+ Kernel Version: 3.10.0-957.el7.x86_64
+ Operating System: CentOS Linux 7 (Core)
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 1.777GiB
+ Name: master
+ ID: DCCV:LTBX:GHL2:BXU5:PNJJ:HQLK:CJQY:7HMG:ZDIQ:Z64R:YEBS:BEA7
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Labels:
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Registry Mirrors:
+  https://2mrc6wis.mirror.aliyuncs.com/
+ Live Restore Enabled: false
+
+[root@master ~]# modprobe br_netfilter
+[root@master ~]# echo 1 >> /proc/sys/net/bridge/bridge-nf-call-iptables
+[root@master ~]# echo 1 >> /proc/sys/net/bridge/bridge-nf-call-ip6tables
+[root@master ~]# kubeadm init \
+> --apiserver-advertise-address=192.168.20.71 \
+> --image-repository=registry.aliyuncs.com/google_containers \
+> --kubernetes-version v1.16.1 \
+> --pod-network-cidr=10.244.0.0/16
+[init] Using Kubernetes version: v1.16.1
 [preflight] Running pre-flight checks
-	[WARNING Swap]: running with swap on is not supported. Please disable swap
-	[WARNING SystemVerification]: this Docker version is not on the list of validated versions: 18.09.0. Latest validated version: 18.06
+	[WARNING SystemVerification]: this Docker version is not on the list of validated versions: 19.03.4. Latest validated version: 18.09
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+^C
+[root@master ~]# kubeadm reset
+[reset] WARNING: Changes made to this host by 'kubeadm init' or 'kubeadm join' will be reverted.
+[reset] Are you sure you want to proceed? [y/N]: y
+[preflight] Running pre-flight checks
+W1107 10:26:42.145977   20876 removeetcdmember.go:79] [reset] No kubeadm config, using etcd pod spec to get data directory
+[reset] No etcd config found. Assuming external etcd
+[reset] Please, manually reset etcd to prevent further issues
+[reset] Stopping the kubelet service
+[reset] Unmounting mounted directories in "/var/lib/kubelet"
+W1107 10:26:42.157225   20876 cleanupnode.go:99] [reset] Failed to evaluate the "/var/lib/kubelet" directory. Skipping its unmount and cleanup: lstat /var/lib/kubelet: no such file or directory
+[reset] Deleting contents of config directories: [/etc/kubernetes/manifests /etc/kubernetes/pki]
+[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf]
+[reset] Deleting contents of stateful directories: [/etc/cni/net.d /var/lib/dockershim /var/run/kubernetes /var/lib/cni]
+
+The reset process does not reset or clean up iptables rules or IPVS tables.
+If you wish to reset iptables, you must do so manually by using the "iptables" command.
+
+If your cluster was setup to utilize IPVS, run ipvsadm --clear (or similar)
+to reset your system's IPVS tables.
+
+The reset process does not clean your kubeconfig files and you must remove them manually.
+Please, check the contents of the $HOME/.kube/config file.
+[root@master ~]# kubeadm init --apiserver-advertise-address=192.168.138.104 --image-repository=registry.aliyuncs.com/google_containers --kubernetes-version v1.16.2 --pod-network-cidr=10.244.0.0/16
+[init] Using Kubernetes version: v1.16.2
+[preflight] Running pre-flight checks
+	[WARNING SystemVerification]: this Docker version is not on the list of validated versions: 19.03.4. Latest validated version: 18.09
 [preflight] Pulling images required for setting up a Kubernetes cluster
 [preflight] This might take a minute or two, depending on the speed of your internet connection
 [preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
@@ -128,18 +378,18 @@ kubeadm初始化： 加上--token-ttl=0使得token永不过期，即此token可�
 [kubelet-start] Activating the kubelet service
 [certs] Using certificateDir folder "/etc/kubernetes/pki"
 [certs] Generating "ca" certificate and key
-[certs] Generating "apiserver-kubelet-client" certificate and key
 [certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [master1.rsq.com kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.0.100]
+[certs] apiserver serving cert is signed for DNS names [master kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.138.104]
+[certs] Generating "apiserver-kubelet-client" certificate and key
 [certs] Generating "front-proxy-ca" certificate and key
 [certs] Generating "front-proxy-client" certificate and key
 [certs] Generating "etcd/ca" certificate and key
-[certs] Generating "etcd/peer" certificate and key
-[certs] etcd/peer serving cert is signed for DNS names [master1.rsq.com localhost] and IPs [10.0.0.100 127.0.0.1 ::1]
-[certs] Generating "apiserver-etcd-client" certificate and key
 [certs] Generating "etcd/server" certificate and key
-[certs] etcd/server serving cert is signed for DNS names [master1.rsq.com localhost] and IPs [10.0.0.100 127.0.0.1 ::1]
+[certs] etcd/server serving cert is signed for DNS names [master localhost] and IPs [192.168.138.104 127.0.0.1 ::1]
+[certs] Generating "etcd/peer" certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [master localhost] and IPs [192.168.138.104 127.0.0.1 ::1]
 [certs] Generating "etcd/healthcheck-client" certificate and key
+[certs] Generating "apiserver-etcd-client" certificate and key
 [certs] Generating "sa" key and public key
 [kubeconfig] Using kubeconfig folder "/etc/kubernetes"
 [kubeconfig] Writing "admin.conf" kubeconfig file
@@ -152,22 +402,22 @@ kubeadm初始化： 加上--token-ttl=0使得token永不过期，即此token可�
 [control-plane] Creating static Pod manifest for "kube-scheduler"
 [etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
 [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
-[apiclient] All control plane components are healthy after 21.001730 seconds
-[uploadconfig] storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
-[kubelet] Creating a ConfigMap "kubelet-config-1.13" in namespace kube-system with the configuration for the kubelets in the cluster
-[patchnode] Uploading the CRI Socket information "/var/run/dockershim.sock" to the Node API object "master1.rsq.com" as an annotation
-[mark-control-plane] Marking the node master1.rsq.com as control-plane by adding the label "node-role.kubernetes.io/master=''"
-[mark-control-plane] Marking the node master1.rsq.com as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
-[bootstrap-token] Using token: qxl5b3.5b78nwu3gm1r4u6o
+[apiclient] All control plane components are healthy after 29.504382 seconds
+[upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[kubelet] Creating a ConfigMap "kubelet-config-1.16" in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node master as control-plane by adding the label "node-role.kubernetes.io/master=''"
+[mark-control-plane] Marking the node master as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: q08c4k.4fwc00bf7nk5y0h2
 [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
-[bootstraptoken] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
-[bootstraptoken] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
-[bootstraptoken] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
-[bootstraptoken] creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
 [addons] Applied essential addon: CoreDNS
 [addons] Applied essential addon: kube-proxy
 
-Your Kubernetes master has initialized successfully!
+Your Kubernetes control-plane has initialized successfully!
 
 To start using your cluster, you need to run the following as a regular user:
 
@@ -179,37 +429,140 @@ You should now deploy a pod network to the cluster.
 Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
   https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
-You can now join any number of machines by running the following on each node
-as root:
+Then you can join any number of worker nodes by running the following on each as root:
 
-  kubeadm join 10.0.0.100:6443 --token awwl45.ejyr39p0cgwgo53c --discovery-token-ca-cert-hash sha256:17f6dc5827bf00b1bdc2ea5333c918fff881bd17627949043551ad1a8201798a
-
-
+kubeadm join 192.168.138.104:6443 --token q08c4k.4fwc00bf7nk5y0h2 \
+    --discovery-token-ca-cert-hash sha256:14451a0ca353ef9684215f18c2dd846b7b49a86ccc9ffc0ffcbc03aa4913f83b 
 
 
+=============================================================================================================================
 
-systemctl start docker 
-docker info  
+hostnamectl set-hostname master
+swapoff -a 
+sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
-rpm -ql kubelet
-清单目录/etc/bubernetes/manifests
-
-配置文件/etc/sysconfig/kubelet
-
-/etc/systemd/system/kubelet.service
-
-主程序/usr/bin/kubelet
+sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+systemctl stop firewalld.service && systemctl disable firewalld.service
 
 
-多选：
-创建或修改/etc/docker/daemon.json：
+sed -i 's/\IPADDR=192.168.138.105/IPADDR=192.168.138.104/g' /etc/sysconfig/network-scripts/ifcfg-ens33
+systemctl restart network
 
-{
-  "exec-opts": ["native.cgroupdriver=systemd"]
-}
+===========================================================================================================================
+       yum list kubeadm --showduplicates|sort -r
+       yum list docker-ce --showduplicates|sort -r
+
+       yum install -y kubeadm 1.9.9-0
+     systemctl enable kubelet
+     systemctl start kubelet
+     systemctl status kubelet
+     systemctl stop kubelet
+
+   74  yum install -y docker-ce 3:19.03.3-3.el7
+
+   76  systemctl enable docker
+     systemctl start docker
+     docker version
+     docker info
+   80  vim /etc/docker/daemon.json
+   
+   83  echo -e "{\n\
+\"registry-mirrors\": [\"https://2mrc6wis.mirror.aliyuncs.com\"],\n\
+\"exec-opts\": [\"native.cgroupdriver=systemd\"]\n\
+}" >> /etc/docker/daemon.json
+   84  cat /etc/docker/daemon.json
+     systemctl daemon-reload
+     systemctl restart docker
+     docker info
+     modprobe br_netfilter
+     echo 1 >> /proc/sys/net/bridge/bridge-nf-call-iptables
+     echo 1 >> /proc/sys/net/bridge/bridge-nf-call-ip6tables
+
+   92  kubeadm reset
+   93  kubeadm init --apiserver-advertise-address=192.168.138.104 --image-repository=registry.aliyuncs.com/google_containers --kubernetes-version v1.16.2 --pod-network-cidr=10.244.0.0/16
 
 
-systemctl start kubelet.service
+
+
+kubeadm join 192.168.138.104:6443 --token hqw3jy.ocrpuby720wckn28 \
+    --discovery-token-ca-cert-hash sha256:d7272932c39bd794f869ed1f4a9781ad323a036bb7c732d8175285c3d6e895f8
+
+
+
+
+
+===============================================================================================================================
+
+
+
+        kubectl get nodes
+        kubectl get cs
+      kubectl get deployment --all-namespaces
+      kubectl get namespaces --all-namespaces
+      kubectl get pod --all-namespaces -o wide
+      kubectl get pod --namespaces kube-system
+
+创建空间：
+kubectl create namespace testcreatenamespaces
+查询：
+kubectl get namespaces --all-namespaces
+添加容器服务httpd:
+kubectl run httpd-app  --image=httpd --replicas=1 -n testcreatenamespaces 
+
+--replicas 克隆
+查询：
+kubectl get pods -n testcreatenamespaces
+kubectl get pods -n testcreatenamespaces -o wide
+kubectl get deployment -n testcreatenamespaces
+
+进入容器：
+kubectl exec -it httpd-app-c77bb8b47-jfd68 -n testcreatenamespaces -- /bin/bash
+
+删除空间：
+kubectl delete namespaces testcreatenamespaces
+
+
+
+拉去镜像并打标签：
+
+docker pull gcrxio/kubernetes-dashboard-amd64:v1.10.1
+docker tag gcrxio/kubernetes-dashboard-amd64:v1.10.1 k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1
+
+wget  https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+获取dashboard镜像
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+vim kubernetes-dashboard.yaml
+
+           Dashboard Deployment
+
+  images: registry.cn-hangzhou.aliyuncs.com/kubernetes-dashboard-amd:v1.10.0
+    imagePullPolicy: IfNotPresent     #本地获取镜像
+            Dashboard Service
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodeport: 32333
+
+
+
+[root@k8s-master01 dashboard]# cd /etc/kubernetes/pki/
+[root@k8s-master01 pki]# (umask 077; openssl genrsa -out dashboard.key 2048)  #创建一个证书
+Generating RSA private key, 2048 bit long modulus
+............................................................................................+++
+.............+++
+e is 65537 (0x10001)
+[root@k8s-master01 pki]# openssl req -new -key dashboard.key -out dashboard.csr -subj "/O=qiangungun/CN=kubernetes-dashboard"    #建立证书的签署请求
+[root@k8s-master01 pki]# openssl x509 -req -in dashboard.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out dashboard.crt -days 3650 #使用集群的ca来签署证书
+Signature ok
+subject=/O=qiangungun/CN=kubernetes-dashboard
+Getting CA Private Key
+[root@k8s-master01 pki]# kubectl create secret generic kubernetes-dashboard-certs --from-file=dashboard.crt=./dashboard.crt --from-file=dashboard.key=./dashboard.key  -n kube-system  #我们需要把我们创建的证书创建为secret给k8s使用
+secret "kubernetes-dashboard-certs" created
 
 
 
@@ -225,12 +578,60 @@ systemctl start kubelet.service
 
 
 
+kubectl apply -f kubernetes-dashboard.yaml
+
+kubectl get pod -n kube-system    #dashborad存在于kube-system名称空间中
+
+kubectl get svc -n kube-system    #查看service和端口是否开启
+
+检查是否获取到dashboard镜像：
+kubectl get pod --namespace kube-system
+
+重新安装dashboard
+
+kubectl delete -f kubernetes-dashboard.yaml
+
+kubectl create -f kubernetes-dashboard.yaml
 
 
+kubectl get pod --namespace kube-system
+kubectl get svc -n kube-system
 
 
-master -] kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl proxy
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 
- kubectl get pods -n kube-system命令查看，我们要看到flannel正常启动并运行的状态才算ok。
-我们要使用docker image ls 要看到flannel镜像拖下来才能看见启动起来。我们只需要等待一会即可。耐心一点
+
+curl http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+
+================================================================================================================================
+
+[root@master ~]# grep 'client-certificate-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.crt
+[root@master ~]# grep 'client-key-data' ~/.kube/config | head -n 1 | awk '{print $2}' | base64 -d >> kubecfg.key
+[root@master ~]# openssl pkcs12 -export -clcerts -inkey kubecfg.key -in kubecfg.crt -out kubecfg.p12 -name "kubernetes-client"
+Enter Export Password:123456
+Verifying - Enter Export Password:
+[root@master ~]# vi admin-user.yaml
+[root@master ~]# kubectl create -f admin-user.yaml
+serviceaccount/admin-user created
+[root@master ~]# vi admin-user-role-binding.yaml
+[root@master ~]# kubectl create -f admin-user-role-binding.yaml
+clusterrolebinding.rbac.authorization.k8s.io/admin-user created
+[root@master ~]# kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+Name:         admin-user-token-9zdps
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: admin-user
+              kubernetes.io/service-account.uid: 97854a3e-f69d-445e-97d0-8aaed7cf2204
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IlR6NGpYMjVNM0phMUV6dXVMWl9OVlFhX29PWnZFblkzYzBCRDZBOFl2bGsifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLTl6ZHBzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5Nzg1NGEzZS1mNjlkLTQ0NWUtOTdkMC04YWFlZDdjZjIyMDQiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.VXW1DDlyIUyvSfJwye5EEsVt6Bc4TGXxKirOh6rcTLmnRxmFVUzqCvQPS41Oo7qkx6PXL1iK1xf12jrqY31tS4eH_AzOmR012ugGy9BjYH0sv4IZxPzViNAva_rx7URyCqhD-uv9G0S6nP5ElObr0yzFSuUq3MLJ7euOgs0LfahoT7qQc_zlJMbBREHT0EHEPCZNxqHjsIgkESyNwwyRx2o9WbKV7FesjL_D1Gl2rU1XXv6yZ15IxY2EUDueirUKhCf42v23E3wc1WRn4VahI_85W8ld8hzvHHAZ5IC_yuF0-i-D8N-csfTXG8wXbd_mVr0z20wy0EpjuxPKBopBvw
+[root@master ~]# 
+
 
